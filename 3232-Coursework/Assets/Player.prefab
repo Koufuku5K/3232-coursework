@@ -158,4 +158,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   currentHP: 100
+  waitMax: 3
+  currentWait: 0
   damage: 20

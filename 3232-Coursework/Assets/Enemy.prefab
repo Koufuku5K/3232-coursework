@@ -74,7 +74,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 200
   currentHP: 200
-  damage: 10
+  waitMax: 5
+  currentWait: 0
+  damage: 30
 --- !u!1 &8647629489360085810
 GameObject:
   m_ObjectHideFlags: 0

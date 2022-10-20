@@ -39,5 +39,22 @@ public class BattleSystem : MonoBehaviour
         GameObject enemyObject = Instantiate(enemyPrefab, enemySpawnPoint);
         enemy = enemyObject.GetComponent<CharacterAttributes>();
         enemyHUD.HUDSetup(enemy);
+
+        battleState = State.PLAYERMOVE;
+        playerMove();
+    }
+
+    void playerMove()
+    {
+
+    }
+
+    public void attackButton()
+    {
+        if (battleState != State.PLAYERMOVE)
+        {
+            return;
+        }
+        Debug.Log("attack!");   
     }
 }

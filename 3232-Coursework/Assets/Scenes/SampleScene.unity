@@ -295,7 +295,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 104528845}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 50694816}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: attackButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &104528845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2663,6 +2675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpSlider: {fileID: 170620129}
   waitSlider: {fileID: 1297762698}
+  attributes: {fileID: 93968397463334610, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
 --- !u!1 &1364554874
 GameObject:
   m_ObjectHideFlags: 0
@@ -3314,6 +3327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpSlider: {fileID: 492804189}
   waitSlider: {fileID: 1203418051}
+  attributes: {fileID: 5417411730765501932, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
 --- !u!1 &1744646029
 GameObject:
   m_ObjectHideFlags: 0

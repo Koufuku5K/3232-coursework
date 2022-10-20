@@ -9,6 +9,14 @@ public class BattleHUD : MonoBehaviour
     public Slider hpSlider;
     public Slider waitSlider;
 
+    public CharacterAttributes attributes;
+
+    void Update()
+    {
+        float incrementWaitValue = attributes.currentWait + Time.deltaTime;
+        incrementWait(1);
+    }
+
     public void HUDSetup(CharacterAttributes attributes)
     {
         hpSlider.maxValue = attributes.maxHP;
@@ -26,5 +34,11 @@ public class BattleHUD : MonoBehaviour
     public void waitSetup(int wait)
     {
         waitSlider.value = wait;
+    }
+
+    public void incrementWait(float incrementWaitValue)
+    {
+        waitSlider.value += incrementWaitValue;
+        Debug.Log("Current value: " + waitSlider.value);    
     }
 }

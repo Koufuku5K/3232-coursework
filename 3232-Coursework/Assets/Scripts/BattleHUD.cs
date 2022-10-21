@@ -11,10 +11,11 @@ public class BattleHUD : MonoBehaviour
 
     public CharacterAttributes attributes;
 
+    float currentTime = 0f;
+
     void Update()
     {
-        float incrementWaitValue = attributes.currentWait + Time.deltaTime;
-        incrementWait(1);
+        incrementWait(currentTime);
     }
 
     public void HUDSetup(CharacterAttributes attributes)
@@ -36,9 +37,11 @@ public class BattleHUD : MonoBehaviour
         waitSlider.value = wait;
     }
 
-    public void incrementWait(float incrementWaitValue)
+    public void incrementWait(float currentTime)
     {
-        waitSlider.value += incrementWaitValue;
+        currentTime += 1 * Time.deltaTime;
+        waitSlider.value += currentTime;
+        Debug.Log("Current Time: " + currentTime);
         Debug.Log("Current value: " + waitSlider.value);    
     }
 }

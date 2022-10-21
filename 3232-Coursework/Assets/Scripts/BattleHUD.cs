@@ -40,8 +40,6 @@ public class BattleHUD : MonoBehaviour
     public void incrementWait(float currentTime)
     {
         currentTime += 1 * Time.deltaTime;
-        waitSlider.value += currentTime;
-        Debug.Log("Current Time: " + currentTime);
-        Debug.Log("Current value: " + waitSlider.value);    
+        waitSlider.value += currentTime; 
     }
 }

@@ -190,12 +190,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ee9a31c5d525340ac6740e0815f932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleHUD: {fileID: 1739707267}
   playerPrefab: {fileID: 5417411730765501929, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
   enemyPrefab: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
   playerSpawnPoint: {fileID: 135888646}
   enemySpawnPoint: {fileID: 679040112}
   playerHUD: {fileID: 1739707267}
   enemyHUD: {fileID: 1331368785}
+  attackButton: {fileID: 104528844}
+  guardButton: {fileID: 2129990682}
   battleState: 0
 --- !u!4 &50694817
 Transform:
@@ -298,7 +301,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 50694816}
         m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
-        m_MethodName: attackButton
+        m_MethodName: Attack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3692,7 +3695,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2129990683}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 50694816}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: Guard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2129990683
 MonoBehaviour:
   m_ObjectHideFlags: 0

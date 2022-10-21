@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum State { START, PLAYERMOVE, ENEMYMOVE, WIN, LOSE }
 
 public class BattleSystem : MonoBehaviour
 {
+    // Reference to other Scripts
+    public BattleHUD battleHUD;
 
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
@@ -19,6 +22,9 @@ public class BattleSystem : MonoBehaviour
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
 
+    public Button attackButton;
+    public Button guardButton;
+
     public State battleState;
 
     // Start is called before the first frame update
@@ -26,6 +32,20 @@ public class BattleSystem : MonoBehaviour
     {
         battleState = State.START;
         BattleSetup();
+    }
+
+    void Update()
+    {
+        if (battleHUD.waitSlider.value == battleHUD.waitSlider.maxValue)
+        {
+            attackButton.GetComponent<Button>().enabled = true;
+            guardButton.GetComponent<Button>().enabled = true;
+        }
+        else
+        {
+            attackButton.GetComponent<Button>().enabled = false;
+            guardButton.GetComponent<Button>().enabled = false;
+        }
     }
 
     void BattleSetup()
@@ -39,22 +59,35 @@ public class BattleSystem : MonoBehaviour
         GameObject enemyObject = Instantiate(enemyPrefab, enemySpawnPoint);
         enemy = enemyObject.GetComponent<CharacterAttributes>();
         enemyHUD.HUDSetup(enemy);
-
-        battleState = State.PLAYERMOVE;
-        playerMove();
     }
 
-    void playerMove()
+    public void Attack()
     {
-
-    }
-
-    public void attackButton()
-    {
-        if (battleState != State.PLAYERMOVE)
+        if (attackButton.GetComponent<Button>().enabled = true)
+        {
+            Debug.Log("Attack!");
+            attackButton.GetComponent<Button>().enabled = false;
+            guardButton.GetComponent<Button>().enabled = false;
+            battleHUD.waitSlider.value = 0;
+            Debug.Log("Attack Button Disabled");
+            Debug.Log("Guard Button Disabled");
+        } 
+        else
         {
             return;
         }
-        Debug.Log("attack!");   
+    }
+
+    public void Guard()
+    {
+        if (guardButton.GetComponent<Button>().enabled = true)
+        {
+            Debug.Log("Guard!");
+            guardButton.GetComponent<Button>().enabled = false;
+            attackButton.GetComponent<Button>().enabled = false;
+            battleHUD.waitSlider.value = 0;
+            Debug.Log("Guard Button Disabled");
+            Debug.Log("Attack Button Disabled");
+        }
     }
 }

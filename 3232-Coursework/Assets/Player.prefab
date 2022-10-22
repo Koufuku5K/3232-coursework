@@ -160,4 +160,6 @@ MonoBehaviour:
   currentHP: 100
   waitMax: 3
   currentWait: 0
+  limitMax: 30
+  currentLimit: 0
   damage: 20

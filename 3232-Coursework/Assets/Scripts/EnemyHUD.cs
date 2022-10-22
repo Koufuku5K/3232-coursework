@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleHUD : MonoBehaviour
+public class EnemyHUD : MonoBehaviour
 {
 
     public Slider hpSlider;
     public Slider waitSlider;
 
-    public CharacterAttributes attributes;
+    public EnemyAttributes enemyAttributes;
 
     float currentTime = 0f;
 
@@ -18,13 +18,13 @@ public class BattleHUD : MonoBehaviour
         incrementWait(currentTime);
     }
 
-    public void HUDSetup(CharacterAttributes attributes)
+    public void enemyHUDSetup(EnemyAttributes enemyAttributes)
     {
-        hpSlider.maxValue = attributes.maxHP;
-        hpSlider.value = attributes.currentHP;
+        hpSlider.maxValue = enemyAttributes.maxHP;
+        hpSlider.value = enemyAttributes.currentHP;
 
-        waitSlider.maxValue = attributes.waitMax;
-        waitSlider.value = attributes.currentWait;
+        waitSlider.maxValue = enemyAttributes.waitMax;
+        waitSlider.value = enemyAttributes.currentWait;
     }
 
     public void HPSetup(int hp)
@@ -40,6 +40,6 @@ public class BattleHUD : MonoBehaviour
     public void incrementWait(float currentTime)
     {
         currentTime += 1 * Time.deltaTime;
-        waitSlider.value += currentTime; 
+        waitSlider.value += currentTime;
     }
 }

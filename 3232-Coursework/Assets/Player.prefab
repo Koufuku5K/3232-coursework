@@ -162,4 +162,5 @@ MonoBehaviour:
   currentWait: 0
   limitMax: 30
   currentLimit: 0
-  damage: 20
+  normalAttackDamage: 20
+  limitDamage: 50

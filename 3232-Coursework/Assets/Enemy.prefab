@@ -72,6 +72,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070d8f725faaff1428e07c9ff3715671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 200
+  currentHP: 200
+  waitMax: 5
+  currentWait: 0
+  damage: 30
 --- !u!1 &8647629489360085810
 GameObject:
   m_ObjectHideFlags: 0

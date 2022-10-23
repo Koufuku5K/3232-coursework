@@ -98,10 +98,22 @@ public class BattleSystem : MonoBehaviour
             limitFrame.SetActive(true);
         }
 
+        // Wait for 1 second
         yield return new WaitForSeconds(1f);
 
         // Continue
         limitFrame.SetActive(false);
+
+        // Damage the Enemy
+        bool isDead = enemy.takeDamage(player.limitDamage);
+
+        enemyHUD.HPSetup(enemy.currentHP);
+        
+        if (isDead == true)
+        {
+            // TODO: Show End Screen
+            Debug.Log("Enemy is Dead!");
+        }
     }
 
     public void Limit()

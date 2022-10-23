@@ -16,4 +16,20 @@ public class CharacterAttributes : MonoBehaviour
     public int normalAttackDamage;
     public int limitDamage;
 
+    public bool takeDamage(int dmg)
+    {
+        currentHP -= dmg;
+
+        if (currentHP <= 0)
+        {
+            // return true if enemy is dead
+            return true;
+        }
+        else
+        {
+            // return false if enemy is not dead
+            return false;
+        }
+    }
+
 }

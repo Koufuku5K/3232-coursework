@@ -76,7 +76,7 @@ MonoBehaviour:
   currentHP: 200
   waitMax: 5
   currentWait: 0
-  damage: 30
+  damage: 10
 --- !u!1 &8647629489360085810
 GameObject:
   m_ObjectHideFlags: 0

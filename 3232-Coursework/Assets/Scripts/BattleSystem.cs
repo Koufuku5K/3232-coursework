@@ -56,6 +56,11 @@ public class BattleSystem : MonoBehaviour
         {
             limitButton.GetComponent<Button>().enabled = false;
         }
+
+        if (enemyHUD.waitSlider.value == enemyHUD.waitSlider.maxValue)
+        {
+            enemyAttack();
+        }
     }
 
     void BattleSetup()
@@ -160,6 +165,23 @@ public class BattleSystem : MonoBehaviour
             Debug.Log("Guard Button Disabled");
             Debug.Log("Attack Button Disabled");
             Debug.Log("Limit Button Disabled");
+        }
+    }
+
+    public void enemyAttack()
+    {
+        // Damage the Player
+        bool isDead = player.takeDamage(enemy.damage);
+
+        playerHUD.HPSetup(player.currentHP);
+
+        // Restart the wait slider to 0
+        enemyHUD.waitSlider.value = 0;
+
+        if (isDead == true)
+        {
+            // TODO: Show End Screen
+            Debug.Log("Player is Dead!");
         }
     }
 }

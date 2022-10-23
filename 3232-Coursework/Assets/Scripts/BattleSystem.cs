@@ -76,6 +76,18 @@ public class BattleSystem : MonoBehaviour
         if (attackButton.GetComponent<Button>().enabled == true)
         {
             Debug.Log("Attack!");
+
+            // Damage the Enemy
+            bool isDead = enemy.takeDamage(player.normalAttackDamage);
+
+            enemyHUD.HPSetup(enemy.currentHP);
+
+            if (isDead == true)
+            {
+                // TODO: Show End Screen
+                Debug.Log("Enemy is Dead!");
+            }
+
             attackButton.GetComponent<Button>().enabled = false;
             guardButton.GetComponent<Button>().enabled = false;
             limitButton.GetComponent<Button>().enabled = false;

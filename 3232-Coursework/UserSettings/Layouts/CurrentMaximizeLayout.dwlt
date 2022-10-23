@@ -231,7 +231,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 36600000
+      m_SelectedIDs: 34600000
       m_LastClickedID: 0
       m_ExpandedIDs: 28fbfffff65e0000705f0000a25f0000f65f0000
       m_RenameOverlay:
@@ -790,9 +790,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 36600000
-    m_LastClickedInstanceID: 24630
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 34600000
+    m_LastClickedInstanceID: 24628
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300008e84000078840000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -809,7 +809,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 9}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0

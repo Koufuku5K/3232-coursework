@@ -14,6 +14,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
+    public GameObject limitFrame;
+
     public Transform playerSpawnPoint;
     public Transform enemySpawnPoint;
 
@@ -88,10 +90,25 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    IEnumerator playerLimit()
+    {
+        // Show the Limit Frame
+        if (limitFrame != null)
+        {
+            limitFrame.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        // Continue
+        limitFrame.SetActive(false);
+    }
+
     public void Limit()
     {
         if (limitButton.GetComponent<Button>().enabled == true)
         {
+            StartCoroutine(playerLimit());
             Debug.Log("Limit!");
             limitButton.GetComponent<Button>().enabled = false;
             attackButton.GetComponent<Button>().enabled = false;

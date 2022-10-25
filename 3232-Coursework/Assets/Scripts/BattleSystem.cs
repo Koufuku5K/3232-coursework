@@ -92,7 +92,9 @@ public class BattleSystem : MonoBehaviour
             bool isDead = enemy.takeDamage(player.normalAttackDamage);
 
             enemyHUD.HPSetup(enemy.currentHP);
-            
+
+            // enemyHUD.HPSetup(enemy.currentHP);
+
             if (isDead == true)
             {
                 // TODO: Show End Screen

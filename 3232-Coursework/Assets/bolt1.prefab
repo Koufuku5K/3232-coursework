@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454bd18cdcf3bc745953ad1e4acad961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObject: {fileID: 5417411730765501929, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
+  enemyObject: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
   rb: {fileID: -2388108522573314889}
 --- !u!61 &7237923210628629048
 BoxCollider2D:

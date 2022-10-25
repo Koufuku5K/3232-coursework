@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class Bolt : MonoBehaviour
 {
+    public GameObject playerObject;
+    public GameObject enemyObject;
+
+    public EnemyHUD enemyHUD;
+
     public Rigidbody2D rb;
 
     CharacterAttributes player;
     EnemyAttributes enemy;
 
     // Start is called before the first frame update
+    void Start()
+    {
+        player = playerObject.GetComponent<CharacterAttributes>();
+        enemy = enemyObject.GetComponent<EnemyAttributes>();
+    }
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -25,10 +36,19 @@ public class Bolt : MonoBehaviour
     {
         if (collider.tag == "Enemy")
         {
-            // Damage Enemy
+            /**
+            // Damage the Enemy
+            bool isDead = enemy.takeDamage(player.normalAttackDamage);
             Debug.Log("Enemy Hit!");
-            // Destroy the bolt
-            Destroy(gameObject);
+
+            // enemyHUD.HPSetup(enemy.currentHP);
+
+            if (isDead == true)
+            {
+                // TODO: Show End Screen
+                Debug.Log("Enemy is Dead!");
+            }
+            */
         }
     }
 }

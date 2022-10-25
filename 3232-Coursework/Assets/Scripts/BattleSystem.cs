@@ -13,14 +13,17 @@ public class BattleSystem : MonoBehaviour
 
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
+    public GameObject boltPrefab;
 
     public GameObject limitFrame;
 
     public Transform playerSpawnPoint;
     public Transform enemySpawnPoint;
+    public Transform boltSpawnPoint;
 
     CharacterAttributes player;
     EnemyAttributes enemy;
+    Bolt bolt;
 
     public Button attackButton;
     public Button guardButton;
@@ -81,6 +84,9 @@ public class BattleSystem : MonoBehaviour
         if (attackButton.GetComponent<Button>().enabled == true)
         {
             Debug.Log("Attack!");
+
+            // Spawn the Bolt
+            GameObject boltObject = Instantiate(boltPrefab, boltSpawnPoint);
 
             // Damage the Enemy
             bool isDead = enemy.takeDamage(player.normalAttackDamage);

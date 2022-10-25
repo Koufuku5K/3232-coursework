@@ -194,9 +194,11 @@ MonoBehaviour:
   enemyHUD: {fileID: 1331368785}
   playerPrefab: {fileID: 5417411730765501929, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
   enemyPrefab: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
+  boltPrefab: {fileID: 7237923210628629049, guid: e2378669080a9b343a26db2348d9d414, type: 3}
   limitFrame: {fileID: 1785546741}
   playerSpawnPoint: {fileID: 135888646}
   enemySpawnPoint: {fileID: 679040112}
+  boltSpawnPoint: {fileID: 0}
   attackButton: {fileID: 104528844}
   guardButton: {fileID: 2129990682}
   limitButton: {fileID: 1149976245}
@@ -1294,6 +1296,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433223277}
   m_CullTransparentMesh: 1
+--- !u!1 &474704333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 474704334}
+  m_Layer: 0
+  m_Name: BoltSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &474704334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474704333}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15, y: -1.53, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &485216410
 GameObject:
   m_ObjectHideFlags: 0
@@ -3367,7 +3400,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455908157
 GameObject:

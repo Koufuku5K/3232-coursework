@@ -198,7 +198,7 @@ MonoBehaviour:
   limitFrame: {fileID: 1785546741}
   playerSpawnPoint: {fileID: 135888646}
   enemySpawnPoint: {fileID: 679040112}
-  boltSpawnPoint: {fileID: 0}
+  boltSpawnPoint: {fileID: 474704334}
   attackButton: {fileID: 104528844}
   guardButton: {fileID: 2129990682}
   limitButton: {fileID: 1149976245}

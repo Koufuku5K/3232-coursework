@@ -133,6 +133,26 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    IEnumerator playerGuard()
+    {
+        // Immune to damage
+        player.immune = true;
+
+        if (player.immune == true)
+        {
+            Debug.Log("Player is Immune!");
+            enemy.damage = 0;
+        }
+
+        // Wait for seconds
+        yield return new WaitForSeconds(player.waitMax);
+
+        // Continue
+        Debug.Log("Player is no longer Immune!");
+        player.immune = false;
+        enemy.damage = 10;
+    }
+
     public void Limit()
     {
         if (limitButton.GetComponent<Button>().enabled == true)
@@ -157,6 +177,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (guardButton.GetComponent<Button>().enabled == true)
         {
+            StartCoroutine(playerGuard());
             Debug.Log("Guard!");
             guardButton.GetComponent<Button>().enabled = false;
             attackButton.GetComponent<Button>().enabled = false;

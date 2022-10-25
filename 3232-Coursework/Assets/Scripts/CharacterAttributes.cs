@@ -13,6 +13,8 @@ public class CharacterAttributes : MonoBehaviour
     public int limitMax;
     public int currentLimit;
 
+    public bool immune = false;
+
     public int normalAttackDamage;
     public int limitDamage;
 

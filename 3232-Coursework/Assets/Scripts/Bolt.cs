@@ -6,19 +6,23 @@ public class Bolt : MonoBehaviour
 {
     public GameObject playerObject;
     public GameObject enemyObject;
-
-    public EnemyHUD enemyHUD;
-
-    public Rigidbody2D rb;
-
+    
+    EnemyHUD enemyHUD;
     CharacterAttributes player;
     EnemyAttributes enemy;
+
+    public Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
         player = playerObject.GetComponent<CharacterAttributes>();
-        enemy = enemyObject.GetComponent<EnemyAttributes>();
+        
+        // Find the instance of Enemy prefab
+        enemy = FindObjectOfType<EnemyAttributes>();
+
+        // Find the EnemyHUD GameObject from the scene
+        enemyHUD = FindObjectOfType<EnemyHUD>();
     }
 
     void Awake()
@@ -36,19 +40,19 @@ public class Bolt : MonoBehaviour
     {
         if (collider.tag == "Enemy")
         {
-            /**
             // Damage the Enemy
             bool isDead = enemy.takeDamage(player.normalAttackDamage);
             Debug.Log("Enemy Hit!");
 
-            // enemyHUD.HPSetup(enemy.currentHP);
+            // Update the health bar of the instance of the enemy
+            enemyHUD.HPSetup(enemy.currentHP);
+            Destroy(gameObject);
 
             if (isDead == true)
             {
                 // TODO: Show End Screen
                 Debug.Log("Enemy is Dead!");
             }
-            */
         }
     }
 }

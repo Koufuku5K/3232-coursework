@@ -26,7 +26,9 @@ public class Bolt : MonoBehaviour
         if (collider.tag == "Enemy")
         {
             // Damage Enemy
+            Debug.Log("Enemy Hit!");
             // Destroy the bolt
+            Destroy(gameObject);
         }
     }
 }

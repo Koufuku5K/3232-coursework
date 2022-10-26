@@ -3160,7 +3160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpSlider: {fileID: 170620129}
   waitSlider: {fileID: 1297762698}
-  enemyAttributes: {fileID: -4797851372121156177, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
+  enemyAttributes: {fileID: 7770070595482311655, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
 --- !u!1 &1364554874
 GameObject:
   m_ObjectHideFlags: 0

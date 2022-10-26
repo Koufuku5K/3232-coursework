@@ -12,6 +12,8 @@ public class EnemyAttributes : MonoBehaviour
 
     public int damage;
 
+    public SpriteRenderer sprite;
+
     public bool takeDamage(int dmg)
     {
         currentHP -= dmg;
@@ -28,4 +30,18 @@ public class EnemyAttributes : MonoBehaviour
         }
     }
 
+    public IEnumerator damaged()
+    {
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        sprite.color = Color.white;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Bolt")
+        {
+            StartCoroutine(damaged());
+        }
+    }
 }

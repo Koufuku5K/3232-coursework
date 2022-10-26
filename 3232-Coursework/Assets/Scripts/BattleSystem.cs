@@ -14,16 +14,20 @@ public class BattleSystem : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     public GameObject boltPrefab;
+    public GameObject limitBoltPrefab;
+    //public float launchForce;
 
     public GameObject limitFrame;
 
     public Transform playerSpawnPoint;
     public Transform enemySpawnPoint;
     public Transform boltSpawnPoint;
+    public Transform limitBoltSpawnPoint;
 
     CharacterAttributes player;
     EnemyAttributes enemy;
     Bolt bolt;
+    LimitBolt limitBolt;
 
     public Button attackButton;
     public Button guardButton;
@@ -86,7 +90,7 @@ public class BattleSystem : MonoBehaviour
             Debug.Log("Attack!");
 
             // Spawn the Bolt
-            GameObject boltObject = Instantiate(boltPrefab, boltSpawnPoint);
+            GameObject boltObject = Instantiate(boltPrefab, limitBoltSpawnPoint);
 
             attackButton.GetComponent<Button>().enabled = false;
             guardButton.GetComponent<Button>().enabled = false;
@@ -115,6 +119,10 @@ public class BattleSystem : MonoBehaviour
 
         // Continue
         limitFrame.SetActive(false);
+
+        //Vector2 direction = enemySpawnPoint.transform.position - limitBoltSpawnPoint.transform.position;
+        GameObject limitBoltObject = Instantiate(limitBoltPrefab, boltSpawnPoint);
+        //limitBoltObject.GetComponent<Rigidbody2D>().velocity = direction * launchForce;
 
         // Damage the Enemy
         bool isDead = enemy.takeDamage(player.limitDamage);

@@ -13,6 +13,10 @@ public class Bolt : MonoBehaviour
 
     public Rigidbody2D rb;
 
+    public Animator animator;
+
+    bool isColliding = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,20 +37,36 @@ public class Bolt : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(10f, 0f);
+        if (isColliding == true)
+        {
+            rb.velocity = new Vector2(0f, 0f);
+        }
+        else
+        {
+            rb.velocity = new Vector2(10f, 0f);
+        }
+    }
+
+    IEnumerator showAnimation()
+    {
+        animator.SetBool("isHit", true);
+        yield return new WaitForSeconds(1f);
+        isColliding = false;
+        Destroy(gameObject);
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Enemy")
         {
+            isColliding = true;
+            StartCoroutine(showAnimation());
             // Damage the Enemy
             bool isDead = enemy.takeDamage(player.normalAttackDamage);
             Debug.Log("Enemy Hit!");
 
             // Update the health bar of the instance of the enemy
             enemyHUD.HPSetup(enemy.currentHP);
-            Destroy(gameObject);
 
             if (isDead == true)
             {

@@ -33,7 +33,7 @@ public class Bolt : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(20f, 0f);
+        rb.velocity = new Vector2(10f, 0f);
     }
 
     public void OnTriggerEnter2D(Collider2D collider)

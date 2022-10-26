@@ -194,7 +194,7 @@ MonoBehaviour:
   enemyHUD: {fileID: 1331368785}
   playerPrefab: {fileID: 5417411730765501929, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
   enemyPrefab: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
-  boltPrefab: {fileID: 7237923210628629049, guid: e2378669080a9b343a26db2348d9d414, type: 3}
+  boltPrefab: {fileID: 7945815270883291252, guid: f5af3a22361976341b3924ff08caa288, type: 3}
   limitFrame: {fileID: 1785546741}
   playerSpawnPoint: {fileID: 135888646}
   enemySpawnPoint: {fileID: 679040112}

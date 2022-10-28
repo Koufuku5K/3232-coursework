@@ -15,9 +15,10 @@ public class BattleSystem : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject boltPrefab;
     public GameObject limitBoltPrefab;
-    public float launchForce = 1f;
-    public float angle = 60;
-    public float timeToHit = 1f;
+    public float gravity = -9.81f;
+    public float time = 1.5f;
+    public float impulseTime = 1.5f;
+    public float limitBoltMass = 5f;
 
     public GameObject limitFrame;
 
@@ -57,7 +58,7 @@ public class BattleSystem : MonoBehaviour
             attackButton.GetComponent<Button>().enabled = false;
             guardButton.GetComponent<Button>().enabled = false;
         }
-        
+
         if (playerHUD.limitSlider.value == playerHUD.limitSlider.maxValue)
         {
             limitButton.GetComponent<Button>().enabled = true;
@@ -102,7 +103,7 @@ public class BattleSystem : MonoBehaviour
             Debug.Log("Attack Button Disabled");
             Debug.Log("Guard Button Disabled");
             Debug.Log("Limit Button Disabled");
-        } 
+        }
         else
         {
             return;
@@ -124,28 +125,12 @@ public class BattleSystem : MonoBehaviour
         limitFrame.SetActive(false);
 
         GameObject limitBoltObject = Instantiate(limitBoltPrefab, limitBoltSpawnPoint);
-        //Vector2 direction = climax.transform.position - limitBoltSpawnPoint.transform.position;
-        var xDistance = enemySpawnPoint.transform.position.x - limitBoltSpawnPoint.transform.position.x;
-        var initialVelocity = xDistance / Mathf.Cos(angle) * timeToHit;
-        var velocityX = initialVelocity * Mathf.Cos(angle);
-        var velocityY = initialVelocity * Mathf.Sin(angle);
-        var climaxY = velocityY * timeToHit - (4.905f * timeToHit * timeToHit);
-        var climaxX = velocityX * timeToHit;
-        Vector2 climax = new Vector2(climaxX, climaxY);
-        //limitBoltObject.GetComponent<Rigidbody2D>().
-        //limitBoltObject.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX, velocityY);
-        limitBoltObject.GetComponent<Rigidbody2D>().AddForce(climax * launchForce);
 
-        // Damage the Enemy
-        bool isDead = enemy.takeDamage(player.limitDamage);
-
-        enemyHUD.HPSetup(enemy.currentHP);
-        
-        if (isDead == true)
-        {
-            // TODO: Show End Screen
-            Debug.Log("Enemy is Dead!");
-        }
+        // Launch the limit bolt
+        var forceX = (((enemySpawnPoint.position.x - limitBoltObject.transform.position.x) / time) * limitBoltMass) / impulseTime;
+        var forceY = (((enemySpawnPoint.position.x - limitBoltObject.transform.position.x) / time - (0.5 * gravity * time)) * limitBoltMass) / impulseTime;
+        Vector2 force = new Vector2((float)forceX, (float)forceY);
+        limitBoltObject.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
 
     IEnumerator playerGuard()

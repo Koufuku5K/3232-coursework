@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 3163461844089098860}
   - component: {fileID: 7772784739436486728}
   - component: {fileID: 4662901961059443560}
+  - component: {fileID: -1439808458552430271}
   m_Layer: 0
   m_Name: bolt2
-  m_TagString: Untagged
+  m_TagString: Bolt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a99f6188894d594d91adcba160038ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObject: {fileID: 5417411730765501929, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
+  enemyObject: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
+  animator: {fileID: -1439808458552430271}
 --- !u!50 &7772784739436486728
 Rigidbody2D:
   serializedVersion: 4
@@ -130,7 +134,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.010030739, y: 0.011033826}
@@ -146,3 +150,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.45993853, y: 0.24176009}
   m_EdgeRadius: 0
+--- !u!95 &-1439808458552430271
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631582720405193352}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: af36ce2fa5c575340aa16f725a8f2570, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

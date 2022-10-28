@@ -196,9 +196,10 @@ MonoBehaviour:
   enemyPrefab: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
   boltPrefab: {fileID: 7945815270883291252, guid: f5af3a22361976341b3924ff08caa288, type: 3}
   limitBoltPrefab: {fileID: 1631582720405193352, guid: 3b21daa681bb8ed4a8ca0a44ef09f758, type: 3}
-  launchForce: 10
-  angle: 80
-  timeToHit: 1
+  gravity: -9.81
+  time: 1.5
+  impulseTime: 7.2
+  limitBoltMass: 5
   limitFrame: {fileID: 1785546741}
   playerSpawnPoint: {fileID: 135888646}
   enemySpawnPoint: {fileID: 679040112}
@@ -4329,7 +4330,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867960335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.02, y: -1.06, z: 0}
+  m_LocalPosition: {x: -15, y: -1.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

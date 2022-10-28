@@ -15,6 +15,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject boltPrefab;
     public GameObject limitBoltPrefab;
+    public GameObject shieldPrefab;
+
     public float gravity = -9.81f;
     public float time = 1.5f;
     public float impulseTime = 1.5f;
@@ -24,7 +26,7 @@ public class BattleSystem : MonoBehaviour
 
     public Transform playerSpawnPoint;
     public Transform enemySpawnPoint;
-    public Transform climax;
+    public Transform shieldSpawnPoint;
     public Transform boltSpawnPoint;
     public Transform limitBoltSpawnPoint;
 
@@ -135,22 +137,15 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator playerGuard()
     {
-        // Immune to damage
-        player.immune = true;
-
-        if (player.immune == true)
-        {
-            Debug.Log("Player is Immune!");
-            enemy.damage = 0;
-        }
+        GameObject shieldObject = Instantiate(shieldPrefab, shieldSpawnPoint);
+        Debug.Log("Player Shielded!");
 
         // Wait for seconds
-        yield return new WaitForSeconds(player.waitMax);
+        yield return new WaitForSeconds(5f);
 
         // Continue
         Debug.Log("Player is no longer Immune!");
-        player.immune = false;
-        enemy.damage = 10;
+        Destroy(shieldObject);
     }
 
     public void Limit()

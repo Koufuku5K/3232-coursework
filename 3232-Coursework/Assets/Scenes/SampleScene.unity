@@ -196,6 +196,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
   boltPrefab: {fileID: 7945815270883291252, guid: f5af3a22361976341b3924ff08caa288, type: 3}
   limitBoltPrefab: {fileID: 1631582720405193352, guid: 3b21daa681bb8ed4a8ca0a44ef09f758, type: 3}
+  shieldPrefab: {fileID: 4372215559003492435, guid: 93cee3e96dfafa343b2492add7b75c9d, type: 3}
   gravity: -9.81
   time: 1.5
   impulseTime: 7.2
@@ -203,7 +204,7 @@ MonoBehaviour:
   limitFrame: {fileID: 1785546741}
   playerSpawnPoint: {fileID: 135888646}
   enemySpawnPoint: {fileID: 679040112}
-  climax: {fileID: 1057613714}
+  shieldSpawnPoint: {fileID: 81715614}
   boltSpawnPoint: {fileID: 474704334}
   limitBoltSpawnPoint: {fileID: 1867960336}
   attackButton: {fileID: 104528844}
@@ -224,6 +225,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &81715613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 81715614}
+  m_Layer: 0
+  m_Name: ShieldSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &81715614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81715613}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.79, y: -1.53, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &104528842
 GameObject:
@@ -1332,7 +1364,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &485216410
 GameObject:
@@ -2125,37 +2157,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5.0000153, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1057613713
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1057613714}
-  m_Layer: 0
-  m_Name: Climax
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1057613714
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1057613713}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.01, y: 2.32, z: 7.036547}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1107172475
 GameObject:
   m_ObjectHideFlags: 0
@@ -4335,7 +4336,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1963312983
 GameObject:

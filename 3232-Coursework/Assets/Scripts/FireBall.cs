@@ -73,5 +73,10 @@ public class FireBall : MonoBehaviour
                 Debug.Log("Enemy is Dead!");
             }
         }
+        else if (collider.tag == "Shield")
+        {
+            isColliding = true;
+            StartCoroutine(showAnimation());
+        }
     }
 }

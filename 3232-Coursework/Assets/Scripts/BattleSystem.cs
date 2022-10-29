@@ -15,6 +15,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject boltPrefab;
     public GameObject limitBoltPrefab;
+    public GameObject fireBallPrefab;
     public GameObject shieldPrefab;
 
     public float gravity = -9.81f;
@@ -29,11 +30,13 @@ public class BattleSystem : MonoBehaviour
     public Transform shieldSpawnPoint;
     public Transform boltSpawnPoint;
     public Transform limitBoltSpawnPoint;
+    public Transform fireBallSpawnPoint;
 
     CharacterAttributes player;
     EnemyAttributes enemy;
     Bolt bolt;
     LimitBolt limitBolt;
+    FireBall fireBall;
 
     public Button attackButton;
     public Button guardButton;
@@ -186,18 +189,9 @@ public class BattleSystem : MonoBehaviour
 
     public void enemyAttack()
     {
-        // Damage the Player
-        bool isDead = player.takeDamage(enemy.damage);
-
-        playerHUD.HPSetup(player.currentHP);
+        GameObject fireBallObject = Instantiate(fireBallPrefab, fireBallSpawnPoint);
 
         // Restart the wait slider to 0
         enemyHUD.waitSlider.value = 0;
-
-        if (isDead == true)
-        {
-            // TODO: Show End Screen
-            Debug.Log("Player is Dead!");
-        }
     }
 }

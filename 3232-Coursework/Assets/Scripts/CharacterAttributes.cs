@@ -18,6 +18,8 @@ public class CharacterAttributes : MonoBehaviour
     public int normalAttackDamage;
     public int limitDamage;
 
+    public SpriteRenderer sprite;
+
     public bool takeDamage(int dmg)
     {
         currentHP -= dmg;
@@ -31,6 +33,21 @@ public class CharacterAttributes : MonoBehaviour
         {
             // return false if enemy is not dead
             return false;
+        }
+    }
+
+    public IEnumerator damaged()
+    {
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        sprite.color = Color.white;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Fireball")
+        {
+            StartCoroutine(damaged());
         }
     }
 

@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a99f6188894d594d91adcba160038ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 5417411730765501929, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
+  playerObject: {fileID: 3323423027826869915, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
   enemyObject: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
   animator: {fileID: -1439808458552430271}
 --- !u!50 &7772784739436486728

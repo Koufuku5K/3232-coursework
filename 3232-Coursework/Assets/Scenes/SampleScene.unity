@@ -192,10 +192,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHUD: {fileID: 1739707267}
   enemyHUD: {fileID: 1331368785}
-  playerPrefab: {fileID: 5417411730765501929, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
+  playerPrefab: {fileID: 3323423027826869915, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}
   enemyPrefab: {fileID: 93968397463334615, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}
   boltPrefab: {fileID: 7945815270883291252, guid: f5af3a22361976341b3924ff08caa288, type: 3}
   limitBoltPrefab: {fileID: 1631582720405193352, guid: 3b21daa681bb8ed4a8ca0a44ef09f758, type: 3}
+  fireBallPrefab: {fileID: 5284382389610711285, guid: 8a72f1bf325c1af479f865b33269f7ba, type: 3}
   shieldPrefab: {fileID: 4372215559003492435, guid: 93cee3e96dfafa343b2492add7b75c9d, type: 3}
   gravity: -9.81
   time: 1.5
@@ -207,6 +208,7 @@ MonoBehaviour:
   shieldSpawnPoint: {fileID: 81715614}
   boltSpawnPoint: {fileID: 474704334}
   limitBoltSpawnPoint: {fileID: 1867960336}
+  fireBallSpawnPoint: {fileID: 900812027}
   attackButton: {fileID: 104528844}
   guardButton: {fileID: 2129990682}
   limitButton: {fileID: 1149976245}
@@ -255,7 +257,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &104528842
 GameObject:
@@ -555,7 +557,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &170620127
 GameObject:
@@ -1364,7 +1366,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &485216410
 GameObject:
@@ -2006,6 +2008,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821008166}
   m_CullTransparentMesh: 1
+--- !u!1 &900812026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 900812027}
+  m_Layer: 0
+  m_Name: FireBallSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &900812027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900812026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.56, y: 3.37, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &934992226
 GameObject:
   m_ObjectHideFlags: 0
@@ -3439,7 +3472,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455908157
 GameObject:
@@ -4336,7 +4369,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1963312983
 GameObject:

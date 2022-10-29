@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Bolt
+  - Fireball
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -11,7 +15,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Background
   - 
   - 
   - 
@@ -38,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2181198507
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public float speed = 3f;
+
     public Animator animator;
+    public Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,6 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Magnitude", movement.magnitude);
 
-        transform.position = transform.position + movement * Time.deltaTime;
+        transform.position = transform.position + movement * speed * Time.deltaTime;
     }
 }

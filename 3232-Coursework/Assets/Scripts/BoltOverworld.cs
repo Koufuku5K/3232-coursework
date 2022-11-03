@@ -12,11 +12,6 @@ public class BoltOverworld : MonoBehaviour
 
     bool isColliding = false;
 
-    void Awake()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -26,6 +21,14 @@ public class BoltOverworld : MonoBehaviour
         if (isColliding == true)
         {
             rb.velocity = new Vector2(0f, 0f);
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "WorldBorder")
+        {
+            Destroy(gameObject);
         }
     }
 }

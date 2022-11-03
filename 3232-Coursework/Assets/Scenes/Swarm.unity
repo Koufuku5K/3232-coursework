@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 2099028704}
   - component: {fileID: 2099028705}
   - component: {fileID: 2099028707}
+  - component: {fileID: 2099028708}
   m_Layer: 0
   m_Name: Hikari
   m_TagString: Untagged
@@ -497,3 +498,15 @@ MonoBehaviour:
   rb: {fileID: 2099028706}
   boltOverworldPrefab: {fileID: 7945815270883291252, guid: 723e6e19206df7845bd554bfbff138e9, type: 3}
   boltForce: 20
+--- !u!114 &2099028708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099028701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b5076d716f0e240bc64e2a2b228f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -496,6 +496,8 @@ MonoBehaviour:
   boltSpawnPoint: {fileID: 43461348}
   crosshair: {fileID: 56507135}
   rb: {fileID: 2099028706}
+  player: {fileID: 0}
+  shootForce: 5
   boltOverworldPrefab: {fileID: 7945815270883291252, guid: 723e6e19206df7845bd554bfbff138e9, type: 3}
   boltForce: 20
 --- !u!114 &2099028708

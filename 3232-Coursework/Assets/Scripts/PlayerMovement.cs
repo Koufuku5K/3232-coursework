@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 3f;
+    float mass = 0.01f;
 
     public Animator animator;
 
@@ -15,14 +16,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
-        
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Magnitude", movement.magnitude);
+        Vector3 force = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
 
-        transform.position = transform.position + movement * speed * Time.deltaTime;
+        animator.SetFloat("Horizontal", force.x);
+        animator.SetFloat("Vertical", force.y);
+        animator.SetFloat("Magnitude", force.magnitude);
+
+        transform.position = transform.position + (force * (1 / mass)) * Time.deltaTime * Time.deltaTime;
     }
 }

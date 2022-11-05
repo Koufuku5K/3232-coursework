@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class BoltOverworld : MonoBehaviour
 {
-    //public Transform boltSpawnPoint;
     public Transform crosshair;
     public Rigidbody2D rb;
-    public ShootBolt sb;
 
     Vector2 currentVelocity;
 
@@ -16,7 +14,7 @@ public class BoltOverworld : MonoBehaviour
 
     void Start()
     {
-        sb = GetComponent<ShootBolt>();
+        
     }
 
     // Update is called once per frame

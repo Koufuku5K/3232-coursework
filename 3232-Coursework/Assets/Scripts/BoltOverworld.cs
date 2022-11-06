@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BoltOverworld : MonoBehaviour
 {
-    public Transform crosshair;
     public Rigidbody2D rb;
 
     Vector2 currentVelocity;
@@ -14,7 +13,7 @@ public class BoltOverworld : MonoBehaviour
 
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame

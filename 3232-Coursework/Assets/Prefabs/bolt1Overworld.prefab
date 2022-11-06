@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshair: {fileID: 0}
   rb: {fileID: 6119490154813142778}
+  slime: {fileID: 7703267412093092864, guid: 0dfb63ca1cfa0f945bd310d6fbaafe0e, type: 3}
   colCount: 0
 --- !u!58 &-4639550442604241983
 CircleCollider2D:

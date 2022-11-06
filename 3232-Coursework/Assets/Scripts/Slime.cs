@@ -5,6 +5,7 @@ using UnityEngine;
 public class Slime : MonoBehaviour
 {
     public int life = 2;
+    public SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -21,19 +22,25 @@ public class Slime : MonoBehaviour
         }
     }
 
+    public IEnumerator slimeDamaged()
+    {
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        sprite.color = Color.white;
+    }
+
     public void OnCollisionEnter2D(Collision2D col)
     {
-        // If bolt hits the slime's head, it instantly kills the slime
+        // If the bolt hits the slime's head, it instantly kills the slime
         if (col.otherCollider is CircleCollider2D)
         {
-            Debug.Log("Headshot");
             Destroy(gameObject);
             Destroy(col.gameObject);
         }
-        // If bolt hits the slime's body, it decreases the slime's health by 1
+        // If the bolt hits the slime's body, it decreases the slime's health by 1
         else if (col.otherCollider is BoxCollider2D)
         {
-            Debug.Log("BodyShot");
+            StartCoroutine(slimeDamaged());
             life--;
             Destroy(col.gameObject);
         }

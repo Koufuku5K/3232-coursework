@@ -18,7 +18,8 @@ public class FireBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemy = enemyObject.GetComponent<EnemyAttributes>();
+        enemy = FindObjectOfType<EnemyAttributes>();
+        //enemy = enemyObject.GetComponent<EnemyAttributes>();
 
         // Find the instance of Player prefab
         player = FindObjectOfType<CharacterAttributes>();
@@ -62,7 +63,9 @@ public class FireBall : MonoBehaviour
             StartCoroutine(showAnimation());
             // Damage the Player
             bool isDead = player.takeDamage(enemy.damage);
-            Debug.Log("Player Hit!");
+            Debug.Log("Player Hit by: " + enemy.damage);
+            // Set enemy damage back to normal
+            enemy.damage = 10;
 
             // Update the health bar of the instance of the player
             playerHUD.HPSetup(player.currentHP);
@@ -70,7 +73,7 @@ public class FireBall : MonoBehaviour
             if (isDead == true)
             {
                 // TODO: Show End Screen
-                Debug.Log("Enemy is Dead!");
+                Debug.Log("Player is Dead!");
             }
         }
         else if (collider.tag == "Shield")

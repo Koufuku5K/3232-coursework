@@ -46,5 +46,9 @@ public class BoltOverworld : MonoBehaviour
 
             colCount += 1;
         }
+        else if (col.gameObject.tag == "WorldBorder")
+        {
+            Destroy(gameObject);
+        }
     }
 }

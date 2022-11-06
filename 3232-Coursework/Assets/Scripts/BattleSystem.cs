@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum State { START, PLAYERMOVE, ENEMYMOVE, WIN, LOSE }
+public enum State { START, WIN, LOSE }
 
 public class BattleSystem : MonoBehaviour
 {
@@ -44,9 +44,14 @@ public class BattleSystem : MonoBehaviour
 
     public State battleState;
 
+    private int enemyMove;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Find the instance of Enemy prefab
+        enemy = FindObjectOfType<EnemyAttributes>();
+
         battleState = State.START;
         BattleSetup();
     }
@@ -75,7 +80,34 @@ public class BattleSystem : MonoBehaviour
 
         if (enemyHUD.waitSlider.value == enemyHUD.waitSlider.maxValue)
         {
-            enemyAttack();
+            // If the previous move was a buff move, attack
+            if (enemy.damage > 10)
+            {
+                enemyBasicAttack();
+            }
+            // If the enemy's health is 100 or less, buff basic attack damage
+            else if (enemy.currentHP <= 100)
+            {
+                enemy.damage *= 2;
+                enemyBasicAttack();
+            }
+            else
+            {
+                // Pick a random move (stochastic behaviour)
+                enemyMove = Random.Range(1, 3);
+                Debug.Log("move pick: " + enemyMove);
+                switch (enemyMove)
+                {
+                    case 1:
+                        Debug.Log("Basic Attack!");
+                        enemyBasicAttack();
+                        break;
+                    case 2:
+                        Debug.Log("Buff Attack!");
+                        enemyBuffAttack();
+                        break;
+                }
+            }
         }
     }
 
@@ -91,6 +123,8 @@ public class BattleSystem : MonoBehaviour
         enemy = enemyObject.GetComponent<EnemyAttributes>();
         enemyHUD.enemyHUDSetup(enemy);
     }
+
+    // Player Moves
 
     public void Attack()
     {
@@ -138,19 +172,6 @@ public class BattleSystem : MonoBehaviour
         limitBoltObject.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
 
-    IEnumerator playerGuard()
-    {
-        GameObject shieldObject = Instantiate(shieldPrefab, shieldSpawnPoint);
-        Debug.Log("Player Shielded!");
-
-        // Wait for seconds
-        yield return new WaitForSeconds(5f);
-
-        // Continue
-        Debug.Log("Player is no longer Immune!");
-        Destroy(shieldObject);
-    }
-
     public void Limit()
     {
         if (limitButton.GetComponent<Button>().enabled == true)
@@ -171,6 +192,19 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    IEnumerator playerGuard()
+    {
+        GameObject shieldObject = Instantiate(shieldPrefab, shieldSpawnPoint);
+        Debug.Log("Player Shielded!");
+
+        // Wait for seconds
+        yield return new WaitForSeconds(5f);
+
+        // Continue
+        Debug.Log("Player is no longer Immune!");
+        Destroy(shieldObject);
+    }
+
     public void Guard()
     {
         if (guardButton.GetComponent<Button>().enabled == true)
@@ -187,11 +221,20 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    public void enemyAttack()
+    // Enemy Moves
+
+    public void enemyBasicAttack()
     {
         GameObject fireBallObject = Instantiate(fireBallPrefab, fireBallSpawnPoint);
 
         // Restart the wait slider to 0
+        enemyHUD.waitSlider.value = 0;
+    }
+
+    // Buff next enemy damage
+    public void enemyBuffAttack()
+    {
+        enemy.GetComponent<EnemyAttributes>().damage *= 2;
         enemyHUD.waitSlider.value = 0;
     }
 }

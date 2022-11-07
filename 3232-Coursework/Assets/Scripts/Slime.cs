@@ -10,7 +10,7 @@ public class Slime : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -32,13 +32,13 @@ public class Slime : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D col)
     {
         // If the bolt hits the slime's head, it instantly kills the slime
-        if (col.otherCollider is CircleCollider2D)
+        if (col.otherCollider is CircleCollider2D && col.gameObject.tag == "Bolt")
         {
             Destroy(gameObject);
             Destroy(col.gameObject);
         }
         // If the bolt hits the slime's body, it decreases the slime's health by 1
-        else if (col.otherCollider is BoxCollider2D)
+        else if (col.otherCollider is BoxCollider2D && col.gameObject.tag == "Bolt")
         {
             StartCoroutine(slimeDamaged());
             life--;

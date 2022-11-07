@@ -26,4 +26,13 @@ public class PlayerMovement : MonoBehaviour
 
         transform.position = transform.position + (force * (1 / mass)) * Time.deltaTime * Time.deltaTime;
     }
+
+    public void OnCollisionEnter2D(Collision2D col)
+    {
+        // If the player hits a slime, the player dies and game over
+        if (col.gameObject.tag == "Slime")
+        {
+            Destroy(gameObject);
+        }
+    }
 }

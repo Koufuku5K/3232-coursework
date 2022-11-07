@@ -164,3 +164,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 2
   sprite: {fileID: 7703267412093092866}
+  player: {fileID: 3323423027826869915, guid: 3a52bfbad60bbe04bb1f056e18d80ed5, type: 3}

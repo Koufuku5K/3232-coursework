@@ -12,6 +12,8 @@ public class EnemyAttributes : MonoBehaviour
 
     public int damage;
 
+    public bool isDead = false;
+
     public SpriteRenderer sprite;
 
     public bool takeDamage(int dmg)

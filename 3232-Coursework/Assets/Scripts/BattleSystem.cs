@@ -24,6 +24,8 @@ public class BattleSystem : MonoBehaviour
     public float limitBoltMass = 5f;
 
     public GameObject limitFrame;
+    public GameObject finishItFrame;
+    public GameObject pointer;
 
     public Transform playerSpawnPoint;
     public Transform enemySpawnPoint;
@@ -108,6 +110,30 @@ public class BattleSystem : MonoBehaviour
                         break;
                 }
             }
+        }
+
+        // Guide player to finish off the boss with limit
+        if (playerHUD.limitSlider.value == playerHUD.limitSlider.maxValue && enemy.currentHP <= 50)
+        {
+            finishItFrame.SetActive(true);
+            pointer.SetActive(true);
+
+            // If player clicks limit or attack, remove the frame
+            if (limitButton.GetComponent<Button>().enabled == false)
+            {
+                finishItFrame.SetActive(false);
+                pointer.SetActive(false);
+            }
+            else if (attackButton.GetComponent<Button>().enabled == false)
+            {
+                finishItFrame.SetActive(false);
+                pointer.SetActive(false);
+            }
+        }
+        else
+        {
+            finishItFrame.SetActive(false);
+            pointer.SetActive(false);
         }
     }
 
@@ -222,7 +248,6 @@ public class BattleSystem : MonoBehaviour
     }
 
     // Enemy Moves
-
     public void enemyBasicAttack()
     {
         GameObject fireBallObject = Instantiate(fireBallPrefab, fireBallSpawnPoint);

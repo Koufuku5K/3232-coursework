@@ -9,6 +9,9 @@ TagManager:
   - Fireball
   - Shield
   - Wall
+  - Gravity
+  - WorldBorder
+  - Slime
   layers:
   - Default
   - TransparentFX
@@ -20,8 +23,8 @@ TagManager:
   - PlayerLayer
   - BoltLayer
   - Crosshair
-  - 
-  - 
+  - SlimeLayer
+  - WorldBorderLayer
   - 
   - 
   - 

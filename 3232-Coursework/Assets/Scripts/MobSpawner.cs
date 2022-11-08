@@ -13,7 +13,7 @@ public class MobSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnInterval = Random.Range(1f, 3f);
+        spawnInterval = Random.Range(1f, 2f);
         StartCoroutine(spawnEnemy(spawnInterval, slimePrefab));
     }
 

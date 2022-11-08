@@ -1509,7 +1509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTime: 0
-  startTime: 5
+  startTime: 120
   timer: {fileID: 219139457}
   enemyPrefab: {fileID: 7448601684397279930, guid: 3082f9739569de2469347765f7616c60, type: 3}
   enemySpawnPoint: {fileID: 1956507080}

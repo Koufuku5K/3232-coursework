@@ -13,6 +13,8 @@ public class Timer : MonoBehaviour
     public GameObject enemyPrefab;
     public Transform enemySpawnPoint;
 
+    bool bossSpawned = false;
+
     void Start()
     {
         currentTime = startTime;
@@ -21,14 +23,19 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        currentTime -= 1 * Time.deltaTime;
-        timer.text = "Time: " + currentTime.ToString("F0");
-
-        /*if (currentTime <= 0)
-        { 
+        if (currentTime >= 0)
+        {
+            currentTime -= 1 * Time.deltaTime;
+            timer.text = "Time: " + currentTime.ToString("F0");
+        }
+        else
+        {
             // Spawn the Boss in the middle of the screen
-            GameObject enemyObject = Instantiate(enemyPrefab, enemySpawnPoint);
-        }*/
+            if (bossSpawned == false)
+            {
+                GameObject enemyObject = Instantiate(enemyPrefab, enemySpawnPoint);
+            }
+            bossSpawned = true;
+        }
     }
-
 }

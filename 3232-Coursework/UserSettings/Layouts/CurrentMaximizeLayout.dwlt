@@ -91,7 +91,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -231,9 +231,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 2c610000
+      m_SelectedIDs: 32610000
       m_LastClickedID: 0
-      m_ExpandedIDs: 3cc9faffc2cdfaffc82efbff7a21fffffe21ffff28fbffff02950000c4950000d6950000
+      m_ExpandedIDs: 40c1faff84c1faff38c5fafff6c5faff3cc9faffc2cdfaffc82efbff7a21fffffe21ffff28fbffff02950000c4950000d6950000d0d900004cda0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -872,8 +872,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 2c610000
-    m_LastClickedInstanceID: 24876
+    m_SelectedInstanceIDs: 32610000
+    m_LastClickedInstanceID: 24882
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000946e000012740000f066000034640000807f0000b85f0000225f00007a6000000a610000346100003e610000
     m_RenameOverlay:

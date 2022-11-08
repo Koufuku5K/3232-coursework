@@ -26,6 +26,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject limitFrame;
     public GameObject finishItFrame;
     public GameObject pointer;
+    public GameObject enemyBuffedText;
+    public GameObject enemyRagedText;
 
     public Transform playerSpawnPoint;
     public Transform enemySpawnPoint;
@@ -80,35 +82,30 @@ public class BattleSystem : MonoBehaviour
             limitButton.GetComponent<Button>().enabled = false;
         }
 
+        // If the enemy's health is 100 or less, show that it is raged
+        if (enemy.currentHP <= 100)
+        {
+            enemyRagedText.SetActive(true);
+        }
+
+        // Enemy attack AI
         if (enemyHUD.waitSlider.value == enemyHUD.waitSlider.maxValue)
         {
             // If the previous move was a buff move, attack
             if (enemy.damage > 10)
             {
+                enemyBuffedText.SetActive(false);
                 enemyBasicAttack();
             }
             // If the enemy's health is 100 or less, buff basic attack damage
             else if (enemy.currentHP <= 100)
             {
                 enemy.damage *= 2;
-                enemyBasicAttack();
+                enemyRandomAttack();
             }
             else
             {
-                // Pick a random move (stochastic behaviour)
-                enemyMove = Random.Range(1, 3);
-                Debug.Log("move pick: " + enemyMove);
-                switch (enemyMove)
-                {
-                    case 1:
-                        Debug.Log("Basic Attack!");
-                        enemyBasicAttack();
-                        break;
-                    case 2:
-                        Debug.Log("Buff Attack!");
-                        enemyBuffAttack();
-                        break;
-                }
+                enemyRandomAttack();
             }
         }
 
@@ -261,5 +258,24 @@ public class BattleSystem : MonoBehaviour
     {
         enemy.GetComponent<EnemyAttributes>().damage *= 2;
         enemyHUD.waitSlider.value = 0;
+        enemyBuffedText.SetActive(true);
+    }
+
+    // Picks a random move (stochastic behaviour)
+    public void enemyRandomAttack()
+    {
+        enemyMove = Random.Range(1, 3);
+        Debug.Log("move pick: " + enemyMove);
+        switch (enemyMove)
+        {
+            case 1:
+                Debug.Log("Basic Attack!");
+                enemyBasicAttack();
+                break;
+            case 2:
+                Debug.Log("Buff Attack!");
+                enemyBuffAttack();
+                break;
+        }
     }
 }

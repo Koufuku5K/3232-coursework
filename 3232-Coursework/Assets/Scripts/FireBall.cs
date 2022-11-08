@@ -80,6 +80,8 @@ public class FireBall : MonoBehaviour
         {
             isColliding = true;
             StartCoroutine(showAnimation());
+            // Set enemy damage back to normal
+            enemy.damage = 10;
         }
     }
 }

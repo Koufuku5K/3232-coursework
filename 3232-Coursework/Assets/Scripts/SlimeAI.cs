@@ -7,7 +7,13 @@ public class SlimeAI : MonoBehaviour
     private enum State
     {
         Chasing,
-        Attacking,
+        Attacking
+    }
+
+    private enum Direction 
+    { 
+        Right,
+        Left
     }
 
     private State state;
@@ -15,12 +21,18 @@ public class SlimeAI : MonoBehaviour
     public Vector3 playerPos;
     private Vector2 slimeMovement;
     public float moveSpeed = 1f;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
+
+    Vector2 currentPos;
+    Vector2 lastPos;
+
+    Vector3 localVelocity;
 
     void Awake()
     {
         state = State.Chasing;
         rb = this.GetComponent<Rigidbody2D>();
+        localVelocity = transform.InverseTransformDirection(Vector3.forward);
     }
 
     // Start is called before the first frame update
@@ -39,11 +51,11 @@ public class SlimeAI : MonoBehaviour
                 chasePlayer();
                 break;
         }
-    }
 
-    void FixedUpdate()
-    {
-        //moveSlime(slimeMovement);
+        // Check if the slime is going right or left and flip sprite horizontally accordingly
+        lastPos = currentPos;
+        currentPos = transform.position;
+        checkDirection();
     }
 
     public void chasePlayer()
@@ -51,8 +63,6 @@ public class SlimeAI : MonoBehaviour
         // Calculate how far the slime is from the player
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
         Vector3 direction = playerPos - transform.position;
-        /*float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;*/
         direction.Normalize();
         slimeMovement = direction;
         moveSlime(slimeMovement);
@@ -61,5 +71,21 @@ public class SlimeAI : MonoBehaviour
     public void moveSlime(Vector2 direction)
     {
         rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
+    }
+
+    void checkDirection()
+    {
+        if (currentPos.x > lastPos.x)
+        {
+            transform.localScale = new Vector3(3f, 3f, 3f);
+        }
+        else if (currentPos.x < lastPos.x)
+        {
+            transform.localScale = new Vector3(-3f, 3f, 3f);
+        }
+        else
+        {
+            // do nothing
+        }
     }
 }

@@ -180,6 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPos: {x: 0, y: 0, z: 0}
   moveSpeed: 10
+  rb: {fileID: 7196260923296580663}
 --- !u!50 &7196260923296580663
 Rigidbody2D:
   serializedVersion: 4

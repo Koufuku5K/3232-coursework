@@ -207,6 +207,7 @@ MonoBehaviour:
   pointer: {fileID: 1914816909}
   enemyBuffedText: {fileID: 1770656735}
   enemyRagedText: {fileID: 154385424}
+  youDiedFrame: {fileID: 0}
   playerSpawnPoint: {fileID: 135888646}
   enemySpawnPoint: {fileID: 679040112}
   shieldSpawnPoint: {fileID: 81715614}
@@ -3680,6 +3681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53bd7537bcb31e246b94574c696a6bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDead: 0
   hpSlider: {fileID: 170620129}
   waitSlider: {fileID: 1297762698}
   enemyAttributes: {fileID: 7770070595482311655, guid: 86d4bfa98d2c4974c8eb2d17fcf50958, type: 3}

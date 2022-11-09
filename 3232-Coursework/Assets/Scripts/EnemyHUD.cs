@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyHUD : MonoBehaviour
 {
+    public bool enemyDead;
 
     public Slider hpSlider;
     public Slider waitSlider;

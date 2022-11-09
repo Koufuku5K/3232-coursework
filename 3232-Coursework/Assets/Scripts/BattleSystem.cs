@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum State { START, WIN, LOSE }
 
@@ -28,6 +29,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject pointer;
     public GameObject enemyBuffedText;
     public GameObject enemyRagedText;
+    public GameObject youDiedFrame;
 
     public Transform playerSpawnPoint;
     public Transform enemySpawnPoint;
@@ -41,6 +43,7 @@ public class BattleSystem : MonoBehaviour
     Bolt bolt;
     LimitBolt limitBolt;
     FireBall fireBall;
+    AudioManager am;
 
     public Button attackButton;
     public Button guardButton;
@@ -55,12 +58,44 @@ public class BattleSystem : MonoBehaviour
     {
         // Find the instance of Enemy prefab
         enemy = FindObjectOfType<EnemyAttributes>();
+        am = FindObjectOfType<AudioManager>();
 
         battleState = State.START;
         BattleSetup();
     }
 
     void Update()
+    {
+        playerButtons();
+
+        if (player.currentHP == 0)
+        {
+            battleState = State.LOSE;
+            SceneManager.LoadScene("GameOver");
+        }
+
+        enemyAI();
+
+        suggestLimit();
+    }
+
+    void BattleSetup()
+    {
+        //Spawn in Player on top of player spawn point
+        GameObject playerObject = Instantiate(playerPrefab, playerSpawnPoint);
+        player = playerObject.GetComponent<CharacterAttributes>();
+        playerHUD.playerHUDSetup(player);
+
+        //Spawn in Enemy on top of enemy spawn point
+        GameObject enemyObject = Instantiate(enemyPrefab, enemySpawnPoint);
+        enemy = enemyObject.GetComponent<EnemyAttributes>();
+        enemyHUD.enemyHUDSetup(enemy);
+    }
+
+    // Game Feedback Codes
+
+    // Disable buttons if slider is not full, enable otherwise
+    public void playerButtons()
     {
         if (playerHUD.waitSlider.value == playerHUD.waitSlider.maxValue)
         {
@@ -81,35 +116,11 @@ public class BattleSystem : MonoBehaviour
         {
             limitButton.GetComponent<Button>().enabled = false;
         }
+    }
 
-        // If the enemy's health is 100 or less, show that it is raged
-        if (enemy.currentHP <= 100)
-        {
-            enemyRagedText.SetActive(true);
-        }
-
-        // Enemy attack AI
-        if (enemyHUD.waitSlider.value == enemyHUD.waitSlider.maxValue)
-        {
-            // If the previous move was a buff move, attack
-            if (enemy.damage > 10)
-            {
-                enemyBuffedText.SetActive(false);
-                enemyBasicAttack();
-            }
-            // If the enemy's health is 100 or less, buff basic attack damage
-            else if (enemy.currentHP <= 100)
-            {
-                enemy.damage *= 2;
-                enemyRandomAttack();
-            }
-            else
-            {
-                enemyRandomAttack();
-            }
-        }
-
-        // Guide player to finish off the boss with limit
+    // Suggest Player to finish off the boss with limit move
+    public void suggestLimit()
+    {
         if (playerHUD.limitSlider.value == playerHUD.limitSlider.maxValue && enemy.currentHP <= 50)
         {
             finishItFrame.SetActive(true);
@@ -134,20 +145,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    void BattleSetup()
-    {
-        //Spawn in Player on top of player spawn point
-        GameObject playerObject = Instantiate(playerPrefab, playerSpawnPoint);
-        player = playerObject.GetComponent<CharacterAttributes>();
-        playerHUD.playerHUDSetup(player);
-
-        //Spawn in Enemy on top of enemy spawn point
-        GameObject enemyObject = Instantiate(enemyPrefab, enemySpawnPoint);
-        enemy = enemyObject.GetComponent<EnemyAttributes>();
-        enemyHUD.enemyHUDSetup(enemy);
-    }
-
-    // Player Moves
+    // Player Codes
 
     public void Attack()
     {
@@ -244,7 +242,8 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    // Enemy Moves
+    // Enemy Codes
+
     public void enemyBasicAttack()
     {
         GameObject fireBallObject = Instantiate(fireBallPrefab, fireBallSpawnPoint);
@@ -276,6 +275,36 @@ public class BattleSystem : MonoBehaviour
                 Debug.Log("Buff Attack!");
                 enemyBuffAttack();
                 break;
+        }
+    }
+
+    // Enemy Attack AI
+    public void enemyAI()
+    {
+        // If the enemy's health is 100 or less, show that it is raged
+        if (enemy.currentHP <= 100)
+        {
+            enemyRagedText.SetActive(true);
+        }
+
+        if (enemyHUD.waitSlider.value == enemyHUD.waitSlider.maxValue)
+        {
+            // If the previous move was a buff move, attack
+            if (enemy.damage > 10)
+            {
+                enemyBuffedText.SetActive(false);
+                enemyBasicAttack();
+            }
+            // If the enemy's health is 100 or less, buff basic attack damage
+            else if (enemy.currentHP <= 100)
+            {
+                enemy.damage *= 2;
+                enemyRandomAttack();
+            }
+            else
+            {
+                enemyRandomAttack();
+            }
         }
     }
 }

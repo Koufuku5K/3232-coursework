@@ -12,6 +12,7 @@ public class Timer : MonoBehaviour
 
     public GameObject enemyPrefab;
     public Transform enemySpawnPoint;
+    public GameObject bossSpawnText;
 
     bool bossSpawned = false;
 
@@ -23,6 +24,10 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
+        if (currentTime <= 5)
+        {
+            bossSpawnText.SetActive(true);
+        }
         if (currentTime >= 0)
         {
             currentTime -= 1 * Time.deltaTime;

@@ -29,4 +29,10 @@ public class AudioManager : MonoBehaviour
         Sounds s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
     }
+
+    public void stopBGM(string name)
+    {
+        Sounds s = Array.Find(sounds, sound => sound.name == name);
+        s.source.Stop();
+    }
 }

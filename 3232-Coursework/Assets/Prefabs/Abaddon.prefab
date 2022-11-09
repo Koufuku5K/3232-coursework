@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1232890331028950159}
   - component: {fileID: 4741368654959251122}
   - component: {fileID: -456339880575183621}
-  m_Layer: 0
+  - component: {fileID: 8089288932925380276}
+  m_Layer: 12
   m_Name: Abaddon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,3 +112,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.03039, y: 5.03}
   m_EdgeRadius: 0
+--- !u!114 &8089288932925380276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7448601684397279930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b05faaae109389749bf72bba7fae5c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

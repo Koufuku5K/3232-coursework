@@ -6,6 +6,7 @@ public class MobSpawner : MonoBehaviour
 {
     [SerializeField]
     public GameObject slimePrefab;
+    public GameObject markPrefab;
 
     // Spawns slime in random interval between 1 to 3 seconds
     private float spawnInterval;
@@ -19,9 +20,20 @@ public class MobSpawner : MonoBehaviour
 
     private IEnumerator spawnEnemy(float interval, GameObject slime)
     {
+        Vector3 location = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f));
+        StartCoroutine(wait(markPrefab, location));
         yield return new WaitForSeconds(interval);
         // Spawns slime in random position
-        GameObject newSlime = Instantiate(slime, new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f), 0), Quaternion.identity);
+        //Vector3 location = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f));
+        //StartCoroutine(wait(markPrefab, location));
+        GameObject newSlime = Instantiate(slime, location, Quaternion.identity);
         StartCoroutine(spawnEnemy(interval, slime));
+    }
+
+    private IEnumerator wait(GameObject mark, Vector3 location)
+    {
+        GameObject newMark = Instantiate(mark, location, Quaternion.identity);
+        yield return new WaitForSeconds(1f);
+        Destroy(newMark);
     }
 }

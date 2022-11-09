@@ -21,12 +21,16 @@ public class SlimeAI : MonoBehaviour
     public Vector3 playerPos;
     private Vector2 slimeMovement;
     public float moveSpeed = 1f;
+    private bool isAttacking = false;
+    public GameObject Range;
     public Rigidbody2D rb;
 
     Vector2 currentPos;
     Vector2 lastPos;
 
     Vector3 localVelocity;
+
+    public Animator animator;
 
     void Awake()
     {
@@ -38,7 +42,7 @@ public class SlimeAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        CircleCollider2D range = GetComponentInChildren<CircleCollider2D>();
     }
 
     // Update is called once per frame
@@ -50,6 +54,11 @@ public class SlimeAI : MonoBehaviour
             case State.Chasing:
                 chasePlayer();
                 break;
+            case State.Attacking:
+                attackPlayer();
+                chasePlayer();
+                break;
+
         }
 
         // Check if the slime is going right or left and flip sprite horizontally accordingly
@@ -87,5 +96,26 @@ public class SlimeAI : MonoBehaviour
         {
             // do nothing
         }
+    }
+
+    void attackPlayer()
+    {
+        animator.SetBool("isAttacking", true);
+        Debug.Log("Attack");
+    }
+
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Player")
+        {
+            state = State.Attacking;
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collider)
+    {
+        state = State.Chasing;
+        animator.SetBool("isAttacking", false);
+        Debug.Log("No Longer Attacking");
     }
 }

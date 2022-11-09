@@ -874,6 +874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slimePrefab: {fileID: 7703267412093092864, guid: 0dfb63ca1cfa0f945bd310d6fbaafe0e, type: 3}
+  markPrefab: {fileID: 4430108787443324149, guid: f6d6267da108d334995e1f433ea73369, type: 3}
 --- !u!4 &577420321
 Transform:
   m_ObjectHideFlags: 0
@@ -1509,7 +1510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTime: 0
-  startTime: 120
+  startTime: 60
   timer: {fileID: 219139457}
   enemyPrefab: {fileID: 7448601684397279930, guid: 3082f9739569de2469347765f7616c60, type: 3}
   enemySpawnPoint: {fileID: 1956507080}

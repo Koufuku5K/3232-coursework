@@ -27,7 +27,7 @@ TagManager:
   - WorldBorderLayer
   - BossLayer
   - GravityLayer
-  - 
+  - WallLayer
   - 
   - 
   - 

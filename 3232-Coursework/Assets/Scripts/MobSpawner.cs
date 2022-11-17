@@ -23,10 +23,8 @@ public class MobSpawner : MonoBehaviour
         Vector3 location = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f));
         StartCoroutine(wait(markPrefab, location));
         yield return new WaitForSeconds(interval);
-        // Spawns slime in random position
-        //Vector3 location = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f));
-        //StartCoroutine(wait(markPrefab, location));
-        GameObject newSlime = Instantiate(slime, location, Quaternion.identity);
+        GameObject newSlime = Instantiate(slime, location, Quaternion.identity) as GameObject;
+        newSlime.transform.parent = GameObject.Find("MobSpawner").transform;
         StartCoroutine(spawnEnemy(interval, slime));
     }
 

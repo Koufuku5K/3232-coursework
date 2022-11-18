@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MobSpawner : MonoBehaviour
 {
-    [SerializeField]
     public GameObject slimePrefab;
     public GameObject markPrefab;
+    public Transform target;
 
     // Spawns slime in random interval between 1 to 3 seconds
     private float spawnInterval;

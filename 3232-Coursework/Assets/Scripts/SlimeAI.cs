@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SlimeAI : MonoBehaviour
 {
@@ -10,44 +11,47 @@ public class SlimeAI : MonoBehaviour
         Attacking
     }
 
-    private enum Direction 
-    { 
+    private enum Direction
+    {
         Right,
         Left
     }
 
     private State state;
-
-    public Vector3 playerPos;
-    private Vector2 slimeMovement;
-    public float moveSpeed = 1f;
-    private bool isAttacking = false;
     public GameObject Range;
-    public Rigidbody2D rb;
+    public Animator animator;
 
     Vector2 currentPos;
     Vector2 lastPos;
 
-    Vector3 localVelocity;
+    Transform target;
+    private NavMeshAgent agent;
 
-    public Animator animator;
+    MobSpawner mobSpawner;
 
     void Awake()
     {
         state = State.Chasing;
-        rb = this.GetComponent<Rigidbody2D>();
-        localVelocity = transform.InverseTransformDirection(Vector3.forward);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        // Get the target game object from parent game object
+        mobSpawner = GetComponentInParent<MobSpawner>();
+        // Get the range collider from the child game object
         CircleCollider2D range = GetComponentInChildren<CircleCollider2D>();
+        target = mobSpawner.target.transform;
+
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Check if player is in enemy range
+        checkRange();
+
         switch (state)
         {
             default:
@@ -58,30 +62,24 @@ public class SlimeAI : MonoBehaviour
                 attackPlayer();
                 chasePlayer();
                 break;
-
         }
 
         // Check if the slime is going right or left and flip sprite horizontally accordingly
         lastPos = currentPos;
         currentPos = transform.position;
         checkDirection();
+
+        agent.SetDestination(target.position);
     }
 
     public void chasePlayer()
     {
-        // Calculate how far the slime is from the player
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
-        Vector3 direction = playerPos - transform.position;
-        direction.Normalize();
-        slimeMovement = direction;
-        moveSlime(slimeMovement);
+        // Chase the player
+        agent.SetDestination(target.position);
     }
 
-    public void moveSlime(Vector2 direction)
-    {
-        rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
-    }
-
+    // Check the direction of the slime. If negative,
+    // make the slime look left. If positive, make the slime look right.
     void checkDirection()
     {
         if (currentPos.x > lastPos.x)
@@ -104,18 +102,18 @@ public class SlimeAI : MonoBehaviour
         Debug.Log("Attack");
     }
 
-    public void OnTriggerEnter2D(Collider2D collider)
+    // If player is in enemy range, change state to attacking. Else, change state to chasing.
+    void checkRange()
     {
-        if (collider.tag == "Player")
+        if (Mathf.Abs(transform.position.x - target.position.x) <= 5 &&
+            Mathf.Abs(transform.position.y - target.position.y) <= 5)
         {
             state = State.Attacking;
         }
-    }
-
-    public void OnTriggerExit2D(Collider2D collider)
-    {
-        state = State.Chasing;
-        animator.SetBool("isAttacking", false);
-        Debug.Log("No Longer Attacking");
+        else
+        {
+            state = State.Chasing;
+            animator.SetBool("isAttacking", false);
+        }
     }
 }

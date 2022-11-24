@@ -7,7 +7,7 @@ public class GameOver : MonoBehaviour
 {
     public void RestartButton()
     {
-        SceneManager.LoadScene("BossBattle");
+        SceneManager.LoadScene(1);
     }
 
     public void MainMenuButton()

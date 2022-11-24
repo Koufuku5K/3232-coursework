@@ -307,4 +307,16 @@ public class BattleSystem : MonoBehaviour
             }
         }
     }
+
+    public void checkDead()
+    {
+        if (playerHUD.hpSlider.value == 0)
+        {
+            Debug.Log("Player is Dead!");
+        }
+        else if (enemyHUD.hpSlider.value == 0)
+        {
+            Debug.Log("Enemy is Dead!");
+        }
+    }
 }

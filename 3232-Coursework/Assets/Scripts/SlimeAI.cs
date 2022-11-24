@@ -18,7 +18,6 @@ public class SlimeAI : MonoBehaviour
     }
 
     private State state;
-    public GameObject Range;
     public Animator animator;
 
     Vector2 currentPos;
@@ -99,14 +98,13 @@ public class SlimeAI : MonoBehaviour
     void attackPlayer()
     {
         animator.SetBool("isAttacking", true);
-        Debug.Log("Attack");
     }
 
     // If player is in enemy range, change state to attacking. Else, change state to chasing.
     void checkRange()
     {
-        if (Mathf.Abs(transform.position.x - target.position.x) <= 5 &&
-            Mathf.Abs(transform.position.y - target.position.y) <= 5)
+        if (Mathf.Abs(transform.position.x - target.position.x) <= 2 &&
+            Mathf.Abs(transform.position.y - target.position.y) <= 2)
         {
             state = State.Attacking;
         }

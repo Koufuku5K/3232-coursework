@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FireBall : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class FireBall : MonoBehaviour
     PlayerHUD playerHUD;
     CharacterAttributes player;
     EnemyAttributes enemy;
+    GameOver gameOverScreen;
 
     public Animator animator;
+    //public GameObject gameOverScreen;
     private Rigidbody2D rb;
     bool isColliding = false;
 
@@ -26,6 +29,9 @@ public class FireBall : MonoBehaviour
 
         // Find the PlayerHUD GameObject from the scene
         playerHUD = FindObjectOfType<PlayerHUD>();
+
+        // Find the Game Over Screen GameObject from the scene
+        gameOverScreen = FindObjectOfType<GameOver>();
     }
 
     void Awake()
@@ -73,6 +79,7 @@ public class FireBall : MonoBehaviour
             if (isDead == true)
             {
                 // TODO: Show End Screen
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 Debug.Log("Player is Dead!");
             }
         }

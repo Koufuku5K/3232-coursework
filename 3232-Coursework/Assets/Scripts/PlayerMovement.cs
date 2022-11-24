@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float mass = 0.01f;
 
     public Animator animator;
+    public GameObject gameOverScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +34,10 @@ public class PlayerMovement : MonoBehaviour
         // If the player hits a slime, the player dies and game over
         if (col.gameObject.tag == "Slime")
         {
-            Destroy(gameObject);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            gameObject.SetActive(false);
+            gameOverScreen.SetActive(true);
+            //SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
         }
     }
 }

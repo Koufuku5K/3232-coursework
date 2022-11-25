@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Diagnostics;
+using System.Linq;
+using MinMaxLibrary.algorithms;
+using MinMaxLibrary.utils;
+using System;
+using MinMaxProjects.tests;
 
 public enum State { START, WIN, LOSE }
 
@@ -62,6 +68,73 @@ public class BattleSystem : MonoBehaviour
 
         battleState = State.START;
         BattleSetup();
+
+        // The player can perform two different actions:
+        // - Attack: Attacks opponent by 10 damage
+        // - Guard:  Nullifies opponent damage
+        HashSet<string> actionsPlayer = new HashSet<string>();
+        actionsPlayer.Add("Attack");
+        actionsPlayer.Add("Guard");
+        actionsPlayer.Add("noop");
+
+        // The boss can perform two actions
+        HashSet<string> actionsBoss = new HashSet<string>();
+        actionsBoss.Add("Attack");
+        actionsBoss.Add("Buff");
+        actionsBoss.Add("noop");
+
+        /// Initialization of the minmax algorithm
+        var cgs = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState();
+        /// Setting some parameters out of the constructor, so to provide a better comment section...
+        var initConf = new TreeBasedGameConfiguration<string>(); // initial state of the tree game
+        cgs.gameConfiguration = initConf;                // initial board configuration
+        cgs.opponentLifeBar = new TreeBasedPlayerConf(1.0, true); //enemyHUD.hpSlider.maxValue; // normalized life bar
+        cgs.playerLifeBar = new TreeBasedPlayerConf(1.0, true); // playerHUD.hpSlider.maxValue; // normalized life bar
+        cgs.isPlayerTurn = false;                        // starting with max
+        cgs.parentAction = "";                           // the root node has NO parent action, represented as an empty string!\
+
+        /// In a more realistic setting, we do not care if we reached the final state or not, let the algorithm decide
+        /// upon the score of each single player! in here, I only set the damage for each player.
+        Func<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState, string, Optional<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState>> f = (conff, act) =>
+        {
+
+            if (Math.Abs(conff.opponentLifeBar.getScore() + conff.playerLifeBar.getScore() - 1.0) < 0.1)
+            {
+                return new Optional<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState>();
+            }
+
+            // Creating a new configuration, where we change the turn
+            var result = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState(conff, act);
+            // Appending the action in the history
+            result.gameConfiguration = conff.gameConfiguration.appendAction(act);
+            result.parentAction = act;
+            // Setting up the actions by performing some damage
+            if (conff.isPlayerTurn)
+            {
+                // UnityEngine.Debug.Assert(actionsPlayer.Contains(act));
+                if (act.Equals("Attack"))
+                    result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.5, 0.0), true);
+                else if (act.Equals("Guard"))
+                    result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.0, 0.0), true);
+                else
+                    result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.0, 0.0), true);
+
+            }
+            else
+            {
+                //UnityEngine.Debug.Assert(actionsBoss.Contains(act));
+                if (act.Equals("Attack"))
+                    result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - 0.3, 0.0), true);
+                else if (act.Equals("Buff"))
+                    result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.0, 0.0), true);
+                else // noop
+                    result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - 0.0, 0.0), true);
+            }
+            return result;
+        };
+
+        MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf> conf = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>(actionsBoss, actionsPlayer, f);
+
     }
 
     void Update()
@@ -151,7 +224,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (attackButton.GetComponent<Button>().enabled == true)
         {
-            Debug.Log("Attack!");
+            UnityEngine.Debug.Log("Attack!");
 
             // Spawn the Bolt
             GameObject boltObject = Instantiate(boltPrefab, boltSpawnPoint);
@@ -160,9 +233,9 @@ public class BattleSystem : MonoBehaviour
             guardButton.GetComponent<Button>().enabled = false;
             limitButton.GetComponent<Button>().enabled = false;
             playerHUD.waitSlider.value = 0;
-            Debug.Log("Attack Button Disabled");
-            Debug.Log("Guard Button Disabled");
-            Debug.Log("Limit Button Disabled");
+            UnityEngine.Debug.Log("Attack Button Disabled");
+            UnityEngine.Debug.Log("Guard Button Disabled");
+            UnityEngine.Debug.Log("Limit Button Disabled");
         }
         else
         {
@@ -198,14 +271,14 @@ public class BattleSystem : MonoBehaviour
         if (limitButton.GetComponent<Button>().enabled == true)
         {
             StartCoroutine(playerLimit());
-            Debug.Log("Limit!");
+            UnityEngine.Debug.Log("Limit!");
             limitButton.GetComponent<Button>().enabled = false;
             attackButton.GetComponent<Button>().enabled = false;
             guardButton.GetComponent<Button>().enabled = false;
             playerHUD.limitSlider.value = 0;
-            Debug.Log("Attack Button Disabled");
-            Debug.Log("Guard Button Disabled");
-            Debug.Log("Limit Button Disabled");
+            UnityEngine.Debug.Log("Attack Button Disabled");
+            UnityEngine.Debug.Log("Guard Button Disabled");
+            UnityEngine.Debug.Log("Limit Button Disabled");
         }
         else
         {
@@ -216,13 +289,13 @@ public class BattleSystem : MonoBehaviour
     IEnumerator playerGuard()
     {
         GameObject shieldObject = Instantiate(shieldPrefab, shieldSpawnPoint);
-        Debug.Log("Player Shielded!");
+        UnityEngine.Debug.Log("Player Shielded!");
 
         // Wait for seconds
         yield return new WaitForSeconds(5f);
 
         // Continue
-        Debug.Log("Player is no longer Immune!");
+        UnityEngine.Debug.Log("Player is no longer Immune!");
         Destroy(shieldObject);
     }
 
@@ -231,14 +304,14 @@ public class BattleSystem : MonoBehaviour
         if (guardButton.GetComponent<Button>().enabled == true)
         {
             StartCoroutine(playerGuard());
-            Debug.Log("Guard!");
+            UnityEngine.Debug.Log("Guard!");
             guardButton.GetComponent<Button>().enabled = false;
             attackButton.GetComponent<Button>().enabled = false;
             limitButton.GetComponent<Button>().enabled = false;
             playerHUD.waitSlider.value = 0;
-            Debug.Log("Guard Button Disabled");
-            Debug.Log("Attack Button Disabled");
-            Debug.Log("Limit Button Disabled");
+            UnityEngine.Debug.Log("Guard Button Disabled");
+            UnityEngine.Debug.Log("Attack Button Disabled");
+            UnityEngine.Debug.Log("Limit Button Disabled");
         }
     }
 
@@ -263,16 +336,16 @@ public class BattleSystem : MonoBehaviour
     // Picks a random move (stochastic behaviour)
     public void enemyRandomAttack()
     {
-        enemyMove = Random.Range(1, 3);
-        Debug.Log("move pick: " + enemyMove);
+        enemyMove = UnityEngine.Random.Range(1, 3);
+        UnityEngine.Debug.Log("move pick: " + enemyMove);
         switch (enemyMove)
         {
             case 1:
-                Debug.Log("Basic Attack!");
+                UnityEngine.Debug.Log("Basic Attack!");
                 enemyBasicAttack();
                 break;
             case 2:
-                Debug.Log("Buff Attack!");
+                UnityEngine.Debug.Log("Buff Attack!");
                 enemyBuffAttack();
                 break;
         }
@@ -312,11 +385,11 @@ public class BattleSystem : MonoBehaviour
     {
         if (playerHUD.hpSlider.value == 0)
         {
-            Debug.Log("Player is Dead!");
+            UnityEngine.Debug.Log("Player is Dead!");
         }
         else if (enemyHUD.hpSlider.value == 0)
         {
-            Debug.Log("Enemy is Dead!");
+            UnityEngine.Debug.Log("Enemy is Dead!");
         }
     }
 }

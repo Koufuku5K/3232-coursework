@@ -179,6 +179,8 @@ namespace MinMaxLibrary.algorithms {
             /// </summary>
             public bool isPlayerTurn;
 
+            public int isGuard = 0;
+
             /// <summary>
             /// Accumulator for assessing 
             /// </summary>

@@ -14,6 +14,10 @@ public enum State { START, WIN, LOSE }
 
 public class BattleSystem : MonoBehaviour
 {
+
+    MinMaxLibrary.utils.NTree<MinMaxLibrary.algorithms.MinMax<string, MinMaxProjects.tests.TreeBasedGameConfiguration<string>, MinMaxProjects.tests.TreeBasedPlayerConf>.CurrentGameState> truncTree;
+    Func<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState, string, Optional<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState>> f;
+    
     // Reference to other Scripts
     public PlayerHUD playerHUD;
     public EnemyHUD enemyHUD;
@@ -51,6 +55,8 @@ public class BattleSystem : MonoBehaviour
     FireBall fireBall;
     AudioManager am;
 
+    MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf> conf;
+
     public Button attackButton;
     public Button guardButton;
     public Button limitButton;
@@ -59,46 +65,37 @@ public class BattleSystem : MonoBehaviour
 
     private int enemyMove;
 
-    // Start is called before the first frame update
-    void Start()
+    void fitTree()
     {
-        // Find the instance of Enemy prefab
-        enemy = FindObjectOfType<EnemyAttributes>();
-        am = FindObjectOfType<AudioManager>();
-
-        battleState = State.START;
-        BattleSetup();
 
         // The player can perform two different actions:
         // - Attack: Attacks opponent by 10 damage
         // - Guard:  Nullifies opponent damage
         HashSet<string> actionsPlayer = new HashSet<string>();
-        actionsPlayer.Add("Attack");
+        actionsPlayer.Add("PlayerAttack");
         actionsPlayer.Add("Guard");
-        actionsPlayer.Add("noop");
 
         // The boss can perform two actions
         HashSet<string> actionsBoss = new HashSet<string>();
-        actionsBoss.Add("Attack");
+        actionsBoss.Add("BossAttack");
         actionsBoss.Add("Buff");
-        actionsBoss.Add("noop");
 
         /// Initialization of the minmax algorithm
         var cgs = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState();
         /// Setting some parameters out of the constructor, so to provide a better comment section...
         var initConf = new TreeBasedGameConfiguration<string>(); // initial state of the tree game
         cgs.gameConfiguration = initConf;                // initial board configuration
-        cgs.opponentLifeBar = new TreeBasedPlayerConf(1.0, true); //enemyHUD.hpSlider.maxValue; // normalized life bar
-        cgs.playerLifeBar = new TreeBasedPlayerConf(1.0, true); // playerHUD.hpSlider.maxValue; // normalized life bar
+        cgs.opponentLifeBar = new TreeBasedPlayerConf(((float)enemy.currentHP)/200.0, true);
+        cgs.playerLifeBar = new TreeBasedPlayerConf(((float)player.currentHP) / 100.0, true);
         cgs.isPlayerTurn = false;                        // starting with max
         cgs.parentAction = "";                           // the root node has NO parent action, represented as an empty string!\
 
         /// In a more realistic setting, we do not care if we reached the final state or not, let the algorithm decide
         /// upon the score of each single player! in here, I only set the damage for each player.
-        Func<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState, string, Optional<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState>> f = (conff, act) =>
+        f = (conff, act) =>
         {
 
-            if (Math.Abs(conff.opponentLifeBar.getScore() + conff.playerLifeBar.getScore() - 1.0) < 0.1)
+            if (((conff.opponentLifeBar.getScore()) < 0.009) || ((conff.playerLifeBar.getScore()) < 0.009))
             {
                 return new Optional<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState>();
             }
@@ -111,34 +108,54 @@ public class BattleSystem : MonoBehaviour
             // Setting up the actions by performing some damage
             if (conff.isPlayerTurn)
             {
+
                 // UnityEngine.Debug.Assert(actionsPlayer.Contains(act));
-                if (act.Equals("Attack"))
-                    result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.5, 0.0), true);
-                else if (act.Equals("Guard"))
-                    result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.0, 0.0), true);
+                if (act.Equals("PlayerAttack"))
+                    result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.1, 0.0), true);
                 else
                     result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.0, 0.0), true);
 
             }
             else
             {
+                /*if (conff.parentAction.Equals("Guard"))
+                {
+                    updateTree("Buff");
+                }*/
                 //UnityEngine.Debug.Assert(actionsBoss.Contains(act));
-                if (act.Equals("Attack"))
-                    result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - 0.3, 0.0), true);
-                else if (act.Equals("Buff"))
-                    result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.0, 0.0), true);
-                else // noop
+                if (act.Equals("BossAttack"))
+                    result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - 0.1, 0.0), true);
+                else
                     result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - 0.0, 0.0), true);
             }
             return result;
         };
 
-        MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf> conf = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>(actionsBoss, actionsPlayer, f);
+        conf = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>(actionsBoss, actionsPlayer, f);
 
+        /// Running the whole MinMax algorithm with alpha/beta pruning
+        Console.WriteLine("Tree with Min/Max approach and Alpha/Beta Pruning:");
+        Console.WriteLine("==================================================");
+        truncTree = conf.fitWithAlphaBetaPruning(cgs);
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Find the instance of Enemy prefab
+        enemy = FindObjectOfType<EnemyAttributes>();
+        am = FindObjectOfType<AudioManager>();
+
+        battleState = State.START;
+        BattleSetup();
+
+        fitTree();
     }
 
     void Update()
     {
+        //UnityEngine.Debug.Log(truncTree.data.action.getBestAction());
         playerButtons();
 
         if (player.currentHP == 0)
@@ -218,12 +235,48 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    public void updateTree(string element)
+    {
+        if ((truncTree == null) || (truncTree.getChildrenSize() == 0))
+            fitTree();
+        // Navigating the tree data structure
+        if (truncTree.data.isPruned)
+        {
+            truncTree = conf.fitWithAlphaBetaPruning(truncTree.data);
+        }
+        var prevTree = truncTree;
+        truncTree = conf.navigateTreeWithAction(truncTree, element);
+        if (truncTree == null)
+        {
+            // If I reached a pruned node, then it means that I need to re-calculate the algorithm
+            truncTree = conf.fitWithAlphaBetaPruning(prevTree.data);
+            truncTree = conf.navigateTreeWithAction(truncTree, element);
+        }
+        /*if (truncTree.data.isPruned)
+        {
+            // If I reached a pruned node, then it means that I need to re-calculate the algorithm
+            //truncTree = conf.fitWithAlphaBetaPruning(truncTree.data);
+            truncTree = conf.fitWithAlphaBetaPruning(prevTree.data);
+            truncTree = conf.navigateTreeWithAction(truncTree, element);
+        }*/
+    }
+
     // Player Codes
 
     public void Attack()
     {
         if (attackButton.GetComponent<Button>().enabled == true)
         {
+            if ((truncTree == null) || (truncTree.getChildrenSize() == 0))
+                fitTree();
+            if (!truncTree.data.isPlayerTurn)
+            {
+                //updateTree("Buff");
+                updateTree("BossAttack");
+            }
+            updateTree("PlayerAttack");
+            UnityEngine.Debug.Log(truncTree.data.action.getBestAction());
+
             UnityEngine.Debug.Log("Attack!");
 
             // Spawn the Bolt
@@ -304,6 +357,18 @@ public class BattleSystem : MonoBehaviour
         if (guardButton.GetComponent<Button>().enabled == true)
         {
             StartCoroutine(playerGuard());
+
+            if ((truncTree == null) || (truncTree.getChildrenSize() == 0))
+                fitTree();
+            if (!truncTree.data.isPlayerTurn)
+            {
+                updateTree("Buff");
+                UnityEngine.Debug.Log(truncTree.data.action.getBestAction());
+                //enemyBuffAttack();
+            }
+            updateTree("Guard");
+            //UnityEngine.Debug.Log(truncTree.data.action.getBestAction());
+
             UnityEngine.Debug.Log("Guard!");
             guardButton.GetComponent<Button>().enabled = false;
             attackButton.GetComponent<Button>().enabled = false;
@@ -318,7 +383,7 @@ public class BattleSystem : MonoBehaviour
     // Enemy Codes
 
     public void enemyBasicAttack()
-    {
+    { 
         GameObject fireBallObject = Instantiate(fireBallPrefab, fireBallSpawnPoint);
 
         // Restart the wait slider to 0
@@ -338,7 +403,7 @@ public class BattleSystem : MonoBehaviour
     {
         enemyMove = UnityEngine.Random.Range(1, 3);
         UnityEngine.Debug.Log("move pick: " + enemyMove);
-        switch (enemyMove)
+        /*switch (enemyMove)
         {
             case 1:
                 UnityEngine.Debug.Log("Basic Attack!");
@@ -348,7 +413,21 @@ public class BattleSystem : MonoBehaviour
                 UnityEngine.Debug.Log("Buff Attack!");
                 enemyBuffAttack();
                 break;
+        }*/
+
+        /*if (truncTree.data.isPlayerTurn)
+        {
+            updateTree("BossAttack");
+        }*/
+        if (truncTree.data.action.getBestAction().Equals("BossAttack"))
+        {
+            enemyBasicAttack();
+        } 
+        else //if (truncTree.data.action.getBestAction().Equals("Buff"))
+        {
+            enemyBuffAttack();
         }
+        updateTree(truncTree.data.action.getBestAction());
     }
 
     // Enemy Attack AI

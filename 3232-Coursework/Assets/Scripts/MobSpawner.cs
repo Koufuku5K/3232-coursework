@@ -14,12 +14,14 @@ public class MobSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Stochastic Behaviour
         spawnInterval = Random.Range(1f, 2f);
         StartCoroutine(spawnEnemy(spawnInterval, slimePrefab));
     }
 
     private IEnumerator spawnEnemy(float interval, GameObject slime)
     {
+        // Spawns enemy in a random location (stochastic behaviour)
         Vector3 location = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f));
         StartCoroutine(wait(markPrefab, location));
         yield return new WaitForSeconds(interval);

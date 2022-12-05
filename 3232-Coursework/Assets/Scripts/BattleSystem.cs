@@ -158,11 +158,11 @@ public class BattleSystem : MonoBehaviour
         //UnityEngine.Debug.Log(truncTree.data.action.getBestAction());
         playerButtons();
 
-        if (player.currentHP == 0)
+        /*if (player.currentHP == 0)
         {
             battleState = State.LOSE;
             SceneManager.LoadScene("GameOver");
-        }
+        }*/
 
         enemyAI();
 
@@ -263,6 +263,10 @@ public class BattleSystem : MonoBehaviour
 
     // Player Codes
 
+    /// <summary>
+    /// Attack function for the player. Clicking on the attack button will spawn an instance
+    /// of a bolt prefab which deals damage to the boss
+    /// </summary>
     public void Attack()
     {
         if (attackButton.GetComponent<Button>().enabled == true)
@@ -319,6 +323,10 @@ public class BattleSystem : MonoBehaviour
         limitBoltObject.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
 
+    /// <summary>
+    /// Limit function for the player. Clicking on the limit button will deal a huge damage to
+    /// the boss.
+    /// </summary>
     public void Limit()
     {
         if (limitButton.GetComponent<Button>().enabled == true)
@@ -352,6 +360,9 @@ public class BattleSystem : MonoBehaviour
         Destroy(shieldObject);
     }
 
+    /// <summary>
+    /// Guard function for the player. Clicking on the guard button will nullify the boss' attack.
+    /// </summary>
     public void Guard()
     {
         if (guardButton.GetComponent<Button>().enabled == true)
@@ -382,6 +393,9 @@ public class BattleSystem : MonoBehaviour
 
     // Enemy Codes
 
+    /// <summary>
+    /// Boss' basic attack that deals 10 damage to the player.
+    /// </summary>
     public void enemyBasicAttack()
     { 
         GameObject fireBallObject = Instantiate(fireBallPrefab, fireBallSpawnPoint);
@@ -390,7 +404,9 @@ public class BattleSystem : MonoBehaviour
         enemyHUD.waitSlider.value = 0;
     }
 
-    // Buff next enemy damage
+    /// <summary>
+    /// This function buffs the next boss attack damage by 100%
+    /// </summary>
     public void enemyBuffAttack()
     {
         enemy.GetComponent<EnemyAttributes>().damage *= 2;
@@ -398,7 +414,10 @@ public class BattleSystem : MonoBehaviour
         enemyBuffedText.SetActive(true);
     }
 
-    // Picks a random move (stochastic behaviour)
+    /// <summary>
+    /// Function that allows the boss to pick a random move between basic attack or buff.
+    /// This is an implementation of the stochastic behaviour.
+    /// </summary>
     public void enemyRandomAttack()
     {
         enemyMove = UnityEngine.Random.Range(1, 3);
@@ -430,7 +449,10 @@ public class BattleSystem : MonoBehaviour
         updateTree(truncTree.data.action.getBestAction());
     }
 
-    // Enemy Attack AI
+    /// <summary>
+    /// Enemy AI. When the boss's health is less than or equal to half, the boss will
+    /// receive the RAGED status. This increases the enemy's basic attack move by 100%
+    /// </summary>
     public void enemyAI()
     {
         // If the enemy's health is 100 or less, show that it is raged
@@ -460,11 +482,15 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if the player or the boss is dead
+    /// </summary>
     public void checkDead()
     {
-        if (playerHUD.hpSlider.value == 0)
+        if (player.currentHP == 0)
         {
-            UnityEngine.Debug.Log("Player is Dead!");
+            battleState = State.LOSE;
+            SceneManager.LoadScene("GameOver");
         }
         else if (enemyHUD.hpSlider.value == 0)
         {

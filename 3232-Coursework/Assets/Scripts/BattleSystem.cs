@@ -15,7 +15,14 @@ public enum State { START, WIN, LOSE }
 public class BattleSystem : MonoBehaviour
 {
 
-    MinMaxLibrary.utils.NTree<MinMaxLibrary.algorithms.MinMax<string, MinMaxProjects.tests.TreeBasedGameConfiguration<string>, MinMaxProjects.tests.TreeBasedPlayerConf>.CurrentGameState> truncTree;
+    enum HumanPlayerActions
+    {
+        Attack,
+        Guard,
+        NOOP
+    }
+
+    MinMaxLibrary.utils.NTree<MinMaxLibrary.algorithms.MinMax<string, MinMaxProjects.tests.TreeBasedGameConfiguration<string>, MinMaxProjects.tests.TreeBasedPlayerConf>.CurrentGameState> truncTree, prevTree;
     Func<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState, string, Optional<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState>> f;
     
     // Reference to other Scripts
@@ -62,6 +69,7 @@ public class BattleSystem : MonoBehaviour
     public Button limitButton;
 
     public State battleState;
+    HumanPlayerActions ha = HumanPlayerActions.NOOP;
 
     private int enemyMove;
 
@@ -108,7 +116,6 @@ public class BattleSystem : MonoBehaviour
             // Setting up the actions by performing some damage
             if (conff.isPlayerTurn)
             {
-
                 // UnityEngine.Debug.Assert(actionsPlayer.Contains(act));
                 if (act.Equals("PlayerAttack"))
                     result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.1, 0.0), true);
@@ -155,14 +162,18 @@ public class BattleSystem : MonoBehaviour
 
     void Update()
     {
-        //UnityEngine.Debug.Log(truncTree.data.action.getBestAction());
         playerButtons();
 
-        /*if (player.currentHP == 0)
+        updateState();
+        switch (battleState)
         {
-            battleState = State.LOSE;
-            SceneManager.LoadScene("GameOver");
-        }*/
+            case State.LOSE:
+                SceneManager.LoadScene("GameOver");
+                break;
+            case State.WIN:
+                SceneManager.LoadScene("YouWin");
+                break;
+        }
 
         enemyAI();
 
@@ -244,7 +255,7 @@ public class BattleSystem : MonoBehaviour
         {
             truncTree = conf.fitWithAlphaBetaPruning(truncTree.data);
         }
-        var prevTree = truncTree;
+        prevTree = truncTree;
         truncTree = conf.navigateTreeWithAction(truncTree, element);
         if (truncTree == null)
         {
@@ -252,13 +263,15 @@ public class BattleSystem : MonoBehaviour
             truncTree = conf.fitWithAlphaBetaPruning(prevTree.data);
             truncTree = conf.navigateTreeWithAction(truncTree, element);
         }
-        /*if (truncTree.data.isPruned)
+        if ((truncTree == null) || (truncTree.getChildrenSize() == 0))
+            fitTree();
+        if (truncTree.data.isPruned)
         {
             // If I reached a pruned node, then it means that I need to re-calculate the algorithm
             //truncTree = conf.fitWithAlphaBetaPruning(truncTree.data);
             truncTree = conf.fitWithAlphaBetaPruning(prevTree.data);
             truncTree = conf.navigateTreeWithAction(truncTree, element);
-        }*/
+        }
     }
 
     // Player Codes
@@ -293,9 +306,11 @@ public class BattleSystem : MonoBehaviour
             UnityEngine.Debug.Log("Attack Button Disabled");
             UnityEngine.Debug.Log("Guard Button Disabled");
             UnityEngine.Debug.Log("Limit Button Disabled");
+            ha = HumanPlayerActions.Attack;
         }
         else
         {
+            ha = HumanPlayerActions.NOOP;
             return;
         }
     }
@@ -388,6 +403,11 @@ public class BattleSystem : MonoBehaviour
             UnityEngine.Debug.Log("Guard Button Disabled");
             UnityEngine.Debug.Log("Attack Button Disabled");
             UnityEngine.Debug.Log("Limit Button Disabled");
+            ha = HumanPlayerActions.Guard;
+        } else
+        {
+            ha = HumanPlayerActions.NOOP;
+            return;
         }
     }
 
@@ -422,30 +442,35 @@ public class BattleSystem : MonoBehaviour
     {
         enemyMove = UnityEngine.Random.Range(1, 3);
         UnityEngine.Debug.Log("move pick: " + enemyMove);
-        /*switch (enemyMove)
-        {
-            case 1:
-                UnityEngine.Debug.Log("Basic Attack!");
-                enemyBasicAttack();
-                break;
-            case 2:
-                UnityEngine.Debug.Log("Buff Attack!");
-                enemyBuffAttack();
-                break;
-        }*/
 
-        /*if (truncTree.data.isPlayerTurn)
+        if (truncTree == null)
         {
-            updateTree("BossAttack");
-        }*/
-        if (truncTree.data.action.getBestAction().Equals("BossAttack"))
+            // If I reached a pruned node, then it means that I need to re-calculate the algorithm
+            truncTree = conf.fitWithAlphaBetaPruning(prevTree.data);
+            truncTree = conf.navigateTreeWithAction(truncTree, prevTree.data.action.getBestAction());
+        }
+
+        if ((truncTree == null) || (truncTree.getChildrenSize() == 0))
         {
-            enemyBasicAttack();
-        } 
-        else //if (truncTree.data.action.getBestAction().Equals("Buff"))
+            fitTree();
+        }
+
+        if (truncTree.data.isPruned)
+        {
+            // If I reached a pruned node, then it means that I need to re-calculate the algorithm
+            //truncTree = conf.fitWithAlphaBetaPruning(truncTree.data);
+            truncTree = conf.fitWithAlphaBetaPruning(prevTree.data);
+            truncTree = conf.navigateTreeWithAction(truncTree,  prevTree.data.action.getBestAction());
+        }
+
+        if (ha == HumanPlayerActions.Guard)
         {
             enemyBuffAttack();
         }
+        else if (truncTree.data.action.getBestAction().Equals("BossAttack"))
+        {
+            enemyBasicAttack();
+        } 
         updateTree(truncTree.data.action.getBestAction());
     }
 
@@ -485,16 +510,15 @@ public class BattleSystem : MonoBehaviour
     /// <summary>
     /// Checks if the player or the boss is dead
     /// </summary>
-    public void checkDead()
+    public void updateState()
     {
         if (player.currentHP == 0)
         {
             battleState = State.LOSE;
-            SceneManager.LoadScene("GameOver");
         }
         else if (enemyHUD.hpSlider.value == 0)
         {
-            UnityEngine.Debug.Log("Enemy is Dead!");
+            battleState = State.WIN;
         }
     }
 }

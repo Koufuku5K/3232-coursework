@@ -76,12 +76,12 @@ public class FireBall : MonoBehaviour
             // Update the health bar of the instance of the player
             playerHUD.HPSetup(player.currentHP);
 
-            if (isDead == true)
+            /*if (isDead == true)
             {
                 // TODO: Show End Screen
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 Debug.Log("Player is Dead!");
-            }
+            }*/
         }
         else if (collider.tag == "Shield")
         {

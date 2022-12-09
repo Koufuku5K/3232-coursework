@@ -2,6 +2,10 @@
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// DISCLAIMER: 
+/// This script is not created by me. Refer to README for the reference.
+/// </summary>
 public class Flocking : MonoBehaviour
 {
     public Vector3 baseRotation;
@@ -46,7 +50,8 @@ public class Flocking : MonoBehaviour
     private void Update()
     {
         var boidColliders = Physics2D.OverlapCircleAll(Position, neighborhoodRadius);
-        var boids = boidColliders.Select(o => o.GetComponent<Flocking>()).ToList();
+        
+        var boids = GameObject.FindGameObjectsWithTag("Bird").Select(o => o.GetComponent<Flocking>()).ToList();
         boids.Remove(this);
 
         Flock(boids);

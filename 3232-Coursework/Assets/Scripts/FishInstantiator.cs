@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// DISCLAIMER: 
+/// This script is not created by me. Refer to README for the reference.
+/// </summary>
 public class FishInstantiator : MonoBehaviour
 {
     public GameObject fishPrefab;

@@ -3386,8 +3386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23dce8c40cdd72a4ab6380a86d196cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishPrefab: {fileID: 4413909281787297116, guid: d65554edf4fdea44b907a4487770e8b3, type: 3}
-  number: 150
+  fishPrefab: {fileID: 1138331384927246, guid: 631258f2758e5c54999d5a1156f1bcf1, type: 3}
+  number: 10
 --- !u!4 &1844989083
 Transform:
   m_ObjectHideFlags: 0

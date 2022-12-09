@@ -73,6 +73,10 @@ public class BattleSystem : MonoBehaviour
 
     private int enemyMove;
 
+    /// <summary>
+    /// DISCLAIMER: 
+    /// This script is not created by me. Refer to README for the reference.
+    /// </summary>
     void fitTree()
     {
 
@@ -116,20 +120,13 @@ public class BattleSystem : MonoBehaviour
             // Setting up the actions by performing some damage
             if (conff.isPlayerTurn)
             {
-                // UnityEngine.Debug.Assert(actionsPlayer.Contains(act));
                 if (act.Equals("PlayerAttack"))
                     result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.1, 0.0), true);
                 else
                     result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - 0.0, 0.0), true);
-
             }
             else
             {
-                /*if (conff.parentAction.Equals("Guard"))
-                {
-                    updateTree("Buff");
-                }*/
-                //UnityEngine.Debug.Assert(actionsBoss.Contains(act));
                 if (act.Equals("BossAttack"))
                     result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - 0.1, 0.0), true);
                 else
@@ -246,6 +243,10 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// DISCLAIMER: 
+    /// This script is not created by me. Refer to README for the reference.
+    /// </summary>
     public void updateTree(string element)
     {
         if ((truncTree == null) || (truncTree.getChildrenSize() == 0))
@@ -435,10 +436,9 @@ public class BattleSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Function that allows the boss to pick a random move between basic attack or buff.
-    /// This is an implementation of the stochastic behaviour.
+    /// Function that uses the tree to determine the best action for the boss.
     /// </summary>
-    public void enemyRandomAttack()
+    public void enemyAttack()
     {
         enemyMove = UnityEngine.Random.Range(1, 3);
         UnityEngine.Debug.Log("move pick: " + enemyMove);
@@ -498,11 +498,11 @@ public class BattleSystem : MonoBehaviour
             else if (enemy.currentHP <= 100)
             {
                 enemy.damage *= 2;
-                enemyRandomAttack();
+                enemyAttack();
             }
             else
             {
-                enemyRandomAttack();
+                enemyAttack();
             }
         }
     }

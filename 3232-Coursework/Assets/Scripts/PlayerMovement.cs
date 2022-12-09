@@ -34,10 +34,8 @@ public class PlayerMovement : MonoBehaviour
         // If the player hits a slime, the player dies and game over
         if (col.gameObject.tag == "Slime")
         {
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             gameObject.SetActive(false);
             gameOverScreen.SetActive(true);
-            //SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
         }
     }
 }

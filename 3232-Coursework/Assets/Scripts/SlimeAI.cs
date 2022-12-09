@@ -11,12 +11,6 @@ public class SlimeAI : MonoBehaviour
         Attacking
     }
 
-    private enum Direction
-    {
-        Right,
-        Left
-    }
-
     private State state;
     public Animator animator;
 

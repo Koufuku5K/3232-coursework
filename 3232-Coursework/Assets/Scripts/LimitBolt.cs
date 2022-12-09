@@ -67,7 +67,6 @@ public class LimitBolt : MonoBehaviour
 
             if (isDead == true)
             {
-                // TODO: Show End Screen
                 Debug.Log("Enemy is Dead!");
             }
         }

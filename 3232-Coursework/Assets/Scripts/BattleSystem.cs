@@ -147,6 +147,8 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = true;
+
         // Find the instance of Enemy prefab
         enemy = FindObjectOfType<EnemyAttributes>();
         am = FindObjectOfType<AudioManager>();

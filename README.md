@@ -1,5 +1,5 @@
 # 3232-coursework
-A small game for 3232 coursework.
+A small game for 3232 coursework created by William Moses (Student ID: 200507666).
 
 Disclaimer:
 
